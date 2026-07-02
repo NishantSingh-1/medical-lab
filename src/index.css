@@ -1,0 +1,112 @@
+@import "tailwindcss";
+@import "./styles/theme.css";
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #FFFDD0;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+@keyframes loginDrawer {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: white;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.btn-secondary {
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+  border-radius: var(--radius-md);
+  font-weight: 600;
+}
+
+.btn-outline {
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
+  border-radius: var(--radius-md);
+  transition: 0.2s ease;
+}
+
+.btn-outline:hover {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.input-field {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  outline: none;
+}
+
+.input-field:focus {
+  border-color: var(--color-primary);
+}
+.card {
+  background: white;
+  border-radius: 24px;
+  border: 1px solid var(--color-border);
+  box-shadow: 0 4px 20px rgb(0 0 0 / 5%);
+}
+
+.text-primary {
+  color: var(--color-primary);
+}
+
+.text-dark {
+  color: var(--color-text-dark);
+}
+
+.text-muted {
+  color: var(--color-text-muted);
+}
+
+.bg-primary {
+  background-color: var(--color-primary);
+}
+
+.bg-primary-light {
+  background-color: var(--color-primary-light);
+}
+
+.border-primary {
+  border-color: var(--color-primary);
+}
+.accent-primary {
+  accent-color: var(--color-primary);
+}
