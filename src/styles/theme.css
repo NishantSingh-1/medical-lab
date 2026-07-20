@@ -1,11 +1,119 @@
+/* =========================================
+   Medical Lab Design System
+   Version: 1.0
+========================================= */
+
 :root {
+  /* Brand Colors */
   --color-primary: #0d9488;
   --color-primary-hover: #0f766e;
   --color-primary-light: #ccfbf1;
 
-  --color-border: #e5e7eb;
-  --color-text-dark: #111827;
-  --color-text-muted: #4b5563;
+  --color-secondary: #2563eb;
+  --color-secondary-hover: #1d4ed8;
+  --color-secondary-light: #dbeafe;
 
-  --radius-md: 16px;
+  /* Status Colors */
+  --color-success: #16a34a;
+  --color-success-light: #dcfce7;
+  --color-warning: #f59e0b;
+  --color-warning-light: #fef3c7;
+  --color-danger: #dc2626;
+  --color-danger-light: #fee2e2;
+  --color-info: #0284c7;
+  --color-info-light: #e0f2fe;
+
+  /* Background */
+  --color-background: #f8fafc;
+  --color-surface: #ffffff;
+  --color-muted-bg: #f1f5f9;
+  --color-card: #ffffff;
+  --color-overlay: rgba(15, 23, 42, 0.45);
+
+  /* Text */
+  --color-text: #111827;
+  --color-text-secondary: #4b5563;
+  --color-text-light: #6b7280;
+  --color-text-white: #ffffff;
+  --color-card-foreground: var(--color-text);
+  --color-muted: #64748b;
+  --color-muted-foreground: #475569;
+
+  /* Border */
+  --color-border: #e5e7eb;
+  --color-border-light: #f1f5f9;
+
+  /* Typography */
+  --font-xs: 12px;
+  --font-sm: 14px;
+  --font-md: 16px;
+  --font-lg: 18px;
+  --font-xl: 20px;
+  --font-2xl: 24px;
+  --font-3xl: 30px;
+  --font-4xl: 36px;
+
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  --font-black: 800;
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
+  --radius-card: 24px;
+  --radius-full: 9999px;
+
+  /* Shadow */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 2px 6px rgba(15, 23, 42, 0.08);
+  --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.1);
+  --shadow-lg: 0 16px 40px rgba(15, 23, 42, 0.14);
+  --shadow-card: 0 10px 30px rgba(15, 23, 42, 0.08);
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+
+  /* Container */
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+  --container-2xl: 1440px;
+
+  /* Header */
+  --navbar-height: 72px;
+
+  /* Transition */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+
+  /* Animation */
+  --animation-fast: 150ms;
+  --animation-normal: 250ms;
+  --animation-slow: 400ms;
+
+  /* Blur */
+  --blur-sm: 4px;
+  --blur-md: 8px;
+  --blur-lg: 12px;
+
+  /* Z Index */
+  --z-dropdown: 1000;
+  --z-sticky: 1010;
+  --z-modal: 1050;
+  --z-toast: 1100;
 }

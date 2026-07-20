@@ -1,7 +1,8 @@
 import { useMemo } from "react";
+
+import { AppButton } from "./common/AppButton";
+import { AppCard } from "./common/AppCard";
 import { useCart } from "./context/CartContext";
-import Button from "./common/Button";
-import Card from "./common/Card";
 
 interface TestCardProps {
   title: string;
@@ -24,7 +25,7 @@ const TestCard = ({ title, price, reportTime, image }: TestCardProps) => {
   );
 
   return (
-    <Card className="overflow-hidden p-0 transition-all duration-300 hover:shadow-xl">
+    <AppCard className="overflow-hidden p-0 transition-all duration-300 hover:shadow-xl">
       <img
         src={image}
         alt={title}
@@ -33,33 +34,28 @@ const TestCard = ({ title, price, reportTime, image }: TestCardProps) => {
       />
 
       <div className="p-5">
-        <h2 className="text-dark text-xl font-bold">{title}</h2>
+        <h2 className="text-xl font-bold text-foreground">{title}</h2>
 
         <div className="mt-4 flex items-center justify-between">
-          <p className="text-primary text-lg font-bold">₹{price}</p>
-
-          <p className="text-muted text-sm">{reportTime}</p>
+          <p className="text-lg font-bold text-primary">₹{price}</p>
+          <p className="text-sm text-muted-foreground">{reportTime}</p>
         </div>
 
         <div className="mt-5 flex gap-3">
-          <Button
-            type="button"
-            variant="outline"
-            className="flex-1 rounded-2xl py-3"
-          >
+          <AppButton type="button" variant="outline" className="flex-1 py-3">
             Details
-          </Button>
+          </AppButton>
 
-          <Button
+          <AppButton
             type="button"
             onClick={() => addToCart(cartItem)}
-            className="flex-1 rounded-2xl py-3"
+            className="flex-1 py-3"
           >
             Add To Cart
-          </Button>
+          </AppButton>
         </div>
       </div>
-    </Card>
+    </AppCard>
   );
 };
 

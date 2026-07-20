@@ -11,9 +11,9 @@ import {
   X,
 } from "lucide-react";
 
-import Button from "../../common/Button";
-import Card from "../../common/Card";
-import Badge from "../../common/Badge";
+import { AppBadge } from "../../common/AppBadge";
+import { AppButton } from "../../common/AppButton";
+import { AppCard } from "../../common/AppCard";
 
 const bookingSteps = [
   "Booking Confirmed",
@@ -40,28 +40,31 @@ const BookingDetailsPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-100 p-4 md:p-6">
-      <button
+    <div className="min-h-screen bg-background p-4 md:p-6">
+      <AppButton
         type="button"
+        variant="ghost"
         onClick={() => navigate(-1)}
-        className="text-primary mb-5 flex items-center gap-2 font-semibold"
+        className="mb-5 flex items-center gap-2 px-0 font-semibold text-primary hover:bg-transparent"
       >
         <ArrowLeft size={20} />
         Back
-      </button>
+      </AppButton>
 
-      <Card className="p-4 md:p-6">
-        <div className="flex flex-col gap-4 border-b pb-5 md:flex-row md:items-center md:justify-between">
+      <AppCard className="p-4 md:p-6">
+        <div className="flex flex-col gap-4 border-b border-border pb-5 md:flex-row md:items-center md:justify-between">
           <div>
-            <h1 className="text-dark text-xl font-bold md:text-2xl">
+            <h1 className="text-xl font-bold text-foreground md:text-2xl">
               CBC Test Booking
             </h1>
-            <p className="mt-1 text-sm text-gray-500">Booking ID: BK-1001</p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Booking ID: BK-1001
+            </p>
           </div>
 
-          <Badge variant={isCancelled ? "warning" : "primary"}>
+          <AppBadge variant={isCancelled ? "warning" : "primary"}>
             {bookingStatus}
-          </Badge>
+          </AppBadge>
         </div>
 
         <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5">
@@ -94,7 +97,7 @@ const BookingDetailsPage = () => {
               <MapPin size={18} className="mt-0.5 shrink-0" />
               Bangalore, Karnataka
             </p>
-            <p className="mt-2 text-sm text-gray-500">
+            <p className="mt-2 text-sm text-muted-foreground">
               Home Sample Collection
             </p>
           </InfoCard>
@@ -103,14 +106,14 @@ const BookingDetailsPage = () => {
             <p className="flex items-center gap-2">
               <CreditCard size={18} /> ₹499 Paid
             </p>
-            <p className="mt-2 font-semibold text-emerald-600">
+            <p className="mt-2 font-semibold text-success">
               Payment Successful
             </p>
           </InfoCard>
         </div>
 
-        <Card className="mt-6 p-4 md:p-5">
-          <h2 className="text-dark mb-5 font-bold">Booking Progress</h2>
+        <AppCard className="mt-6 p-4 md:p-5">
+          <h2 className="mb-5 font-bold text-foreground">Booking Progress</h2>
 
           <div className="space-y-5">
             {bookingSteps.map((step, index) => {
@@ -121,10 +124,10 @@ const BookingDetailsPage = () => {
                   <div
                     className={`mt-1 h-4 w-4 shrink-0 rounded-full ${
                       isCancelled
-                        ? "bg-red-400"
+                        ? "bg-danger"
                         : isCompleted
                         ? "bg-primary"
-                        : "bg-gray-300"
+                        : "bg-border"
                     }`}
                   />
 
@@ -132,16 +135,16 @@ const BookingDetailsPage = () => {
                     <p
                       className={`font-semibold ${
                         isCancelled
-                          ? "text-red-600"
+                          ? "text-danger"
                           : isCompleted
                           ? "text-primary"
-                          : "text-gray-500"
+                          : "text-muted-foreground"
                       }`}
                     >
                       {isCancelled && index > 0 ? "Cancelled" : step}
                     </p>
 
-                    <p className="mt-1 text-xs text-gray-400">
+                    <p className="mt-1 text-xs text-muted-foreground">
                       {index === 0
                         ? "Your booking has been confirmed."
                         : "Status will update soon."}
@@ -151,77 +154,78 @@ const BookingDetailsPage = () => {
               );
             })}
           </div>
-        </Card>
+        </AppCard>
 
         <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
-          <Button
+          <AppButton
             onClick={() => navigate("/user/report-viewer")}
-            className="flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3"
+            className="flex w-full items-center justify-center gap-2 px-5 py-3"
           >
             <FileText size={18} />
             View Report
-          </Button>
+          </AppButton>
 
-          <Button
+          <AppButton
             variant="secondary"
             onClick={handleDownloadInvoice}
-            className="flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3"
+            className="flex w-full items-center justify-center gap-2 px-5 py-3"
           >
             <Download size={18} />
             Invoice
-          </Button>
+          </AppButton>
 
-          <Button
+          <AppButton
+            variant="danger"
             onClick={() => setShowCancelModal(true)}
             disabled={isCancelled}
-            className={`w-full rounded-xl px-5 py-3 ${
-              isCancelled
-                ? "cursor-not-allowed bg-gray-200 text-gray-400 hover:bg-gray-200"
-                : "bg-red-600 text-white hover:bg-red-700"
-            }`}
+            className="w-full px-5 py-3"
           >
             Cancel Booking
-          </Button>
+          </AppButton>
         </div>
-      </Card>
+      </AppCard>
 
       {showCancelModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
-          <Card className="w-full max-w-md p-5 md:p-6">
+          <AppCard className="w-full max-w-md p-5 md:p-6">
             <div className="flex items-center justify-between gap-4">
-              <h2 className="text-dark text-xl font-bold">Cancel Booking?</h2>
+              <h2 className="text-xl font-bold text-foreground">
+                Cancel Booking?
+              </h2>
 
-              <button
+              <AppButton
                 type="button"
+                variant="ghost"
                 onClick={() => setShowCancelModal(false)}
-                className="rounded-full p-2 hover:bg-gray-100"
+                className="rounded-full p-2 hover:bg-muted"
               >
                 <X size={20} />
-              </button>
+              </AppButton>
             </div>
 
-            <p className="mt-3 text-gray-500">
+            <p className="mt-3 text-muted-foreground">
               Are you sure you want to cancel this booking? This action cannot
               be undone.
             </p>
 
             <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
-              <Button
+              <AppButton
+                variant="danger"
                 onClick={handleCancelBooking}
-                className="rounded-xl bg-red-600 px-5 py-3 text-white hover:bg-red-700"
+                className="px-5 py-3"
               >
                 Yes, Cancel
-              </Button>
+              </AppButton>
 
-              <Button
+              <AppButton
                 variant="secondary"
                 onClick={() => setShowCancelModal(false)}
-                className="rounded-xl px-5 py-3"
+                className="px-5 py-3"
               >
                 Keep Booking
-              </Button>
+              </AppButton>
             </div>
-          </Card>
+          </AppCard>
         </div>
       )}
     </div>
@@ -236,10 +240,10 @@ const InfoCard = ({
   children: ReactNode;
 }) => {
   return (
-    <Card className="p-4 md:p-5">
-      <h2 className="text-dark mb-3 font-bold">{title}</h2>
-      <div className="space-y-2 text-sm text-gray-700">{children}</div>
-    </Card>
+    <AppCard className="p-4 md:p-5">
+      <h2 className="mb-3 font-bold text-foreground">{title}</h2>
+      <div className="space-y-2 text-sm text-foreground">{children}</div>
+    </AppCard>
   );
 };
 

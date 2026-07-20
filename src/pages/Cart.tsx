@@ -1,147 +1,182 @@
-import { Link } from "react-router-dom";
-import { useCart } from "../components/context/CartContext";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  ArrowLeft,
+  FlaskConical,
+  ShieldCheck,
+  ShoppingCart,
+} from "lucide-react";
+
+import { AppButton } from "@/components/common/AppButton";
+import { AppCard } from "@/components/common/AppCard";
+
+import { useCart } from "@/components/context/CartContext";
+
+import { AddressModal } from "@/features/cart/components/AddressModal";
+import { CartItems } from "@/features/cart/components/CartItems";
+import { CheckoutSidebar } from "@/features/cart/components/CheckoutSidebar";
+
+import {
+  SlotModal,
+  type SelectedSlot,
+} from "@/features/cart/components/SlotModal";
+import { usePaymentStore } from "@/features/payment/store/usePaymentStore";
+
+export type Address = {
+  fullName: string;
+  mobile: string;
+  houseNumber: string;
+  street: string;
+  landmark: string;
+  city: string;
+  state: string;
+  pincode: string;
+};
 
 const Cart = () => {
-  const { cartItems, removeFromCart } = useCart();
+  const navigate = useNavigate();
 
-  const subtotal = cartItems.reduce(
-    (total: number, item: any) =>
-      total + Number(item.price),
-    0
-  );
+  const { cartItems, subtotal } = useCart();
+
+  const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
+  const [selectedAddress, setSelectedAddress] =
+    useState<Address | null>(null);
+
+  const [isSlotModalOpen, setIsSlotModalOpen] = useState(false);
+  const [selectedSlot, setSelectedSlot] =
+    useState<SelectedSlot | null>(null);
 
   const gst = Math.round(subtotal * 0.05);
-
   const total = subtotal + gst;
 
+  const isCartEmpty = cartItems.length === 0;
+
+  const handleSaveAddress = (address: Address) => {
+    setSelectedAddress(address);
+    setIsAddressModalOpen(false);
+  };
+  // simple checkout handler
+  const handleCheckout = () => {
+    if (isCartEmpty) return;
+    navigate('/checkout');
+  };
+
+  const handleConfirmSlot = (slot: SelectedSlot) => {
+    setSelectedSlot(slot);
+    setIsSlotModalOpen(false);
+  };
+
+
+
   return (
-    <section className="min-h-screen bg-slate-50 py-28">
-      <div className="max-w-7xl mx-auto px-5">
-
-        <h1 className="text-4xl font-bold text-gray-900">
-          My Cart
-        </h1>
-
-        <div className="grid lg:grid-cols-3 gap-8 mt-10">
-
-          {/* Left Side */}
-          <div className="lg:col-span-2 space-y-5">
-
-            {cartItems.length === 0 ? (
-
-              <div className="bg-white p-8 rounded-2xl shadow text-center">
-
-                <h2 className="text-2xl font-bold">
-                  Cart is Empty
-                </h2>
-
-                <p className="text-gray-500 mt-2">
-                  Add some tests to continue.
-                </p>
-
-              </div>
-
-            ) : (
-
-              cartItems.map((item: any, index: number) => (
-
-                <div
-                  key={index}
-                  className="bg-white p-5 rounded-2xl shadow"
-                >
-
-                  <div className="flex items-center gap-4">
-
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="w-20 h-20 object-cover rounded-xl"
-                    />
-
-                    <div>
-
-                      <h3 className="text-xl font-bold">
-                        {item.title}
-                      </h3>
-
-                      <p className="text-gray-500">
-                        {item.reportTime}
-                      </p>
-
-                    </div>
-
-                  </div>
-
-                  <div className="flex justify-between items-center mt-5">
-
-                    <span className="text-2xl font-bold text-teal-600">
-                      ₹{item.price}
-                    </span>
-
-                    <button
-                      onClick={() =>
-                        removeFromCart(item.title)
-                      }
-                      className="text-red-500 font-medium"
-                    >
-                      Remove
-                    </button>
-
-                  </div>
-
-                </div>
-
-              ))
-
-            )}
-
-          </div>
-
-          {/* Summary */}
-          <div>
-
-            <div className="bg-white p-6 rounded-2xl shadow sticky top-28">
-
-              <h3 className="text-2xl font-bold mb-6">
-                Order Summary
-              </h3>
-
-              <div className="space-y-4">
-
-                <div className="flex justify-between">
-                  <span>Subtotal</span>
-                  <span>₹{subtotal}</span>
-                </div>
-
-                <div className="flex justify-between">
-                  <span>GST (5%)</span>
-                  <span>₹{gst}</span>
-                </div>
-
-                <hr />
-
-                <div className="flex justify-between text-xl font-bold">
-                  <span>Total</span>
-                  <span>₹{total}</span>
-                </div>
-
-              </div>
-
-              <Link
-                to="/booking"
-                className="block text-center w-full mt-6 bg-teal-600 hover:bg-teal-700 text-white py-3 rounded-xl font-semibold"
+    <>
+      <main className="min-h-screen bg-background">
+        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+          <header className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <button
+                type="button"
+                onClick={() => navigate("/tests")}
+                className="mb-4 flex items-center gap-2 text-sm font-bold text-muted-foreground transition hover:text-primary"
               >
-                Proceed To Booking
-              </Link>
+                <ArrowLeft size={17} />
+                Continue Browsing
+              </button>
 
+              <div className="flex items-center gap-3">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-light text-primary">
+                  <ShoppingCart size={23} />
+                </div>
+
+                <div>
+                  <p className="text-sm font-bold text-primary">
+                    Test Booking
+                  </p>
+
+                  <h1 className="text-3xl font-black tracking-tight text-foreground">
+                    My Cart
+                  </h1>
+                </div>
+              </div>
+
+              <p className="mt-3 text-sm text-muted-foreground">
+                Review your selected tests and complete your booking details.
+              </p>
             </div>
 
+            {!isCartEmpty && (
+              <p className="text-sm font-bold text-muted-foreground">
+                {cartItems.length} item
+                {cartItems.length > 1 ? "s" : ""} selected
+              </p>
+            )}
+          </header>
+
+          <div className="grid gap-6 lg:grid-cols-12 lg:items-start">
+            <section className="lg:col-span-8">
+              {isCartEmpty ? (
+                <EmptyCartState onBrowseTests={() => navigate("/tests")} />
+              ) : (
+                <CartItems />
+              )}
+            </section>
+
+            <aside className="lg:col-span-4">
+              
+            </aside>
           </div>
-
         </div>
+      </main>
 
+      <AddressModal
+        open={isAddressModalOpen}
+        onClose={() => setIsAddressModalOpen(false)}
+        onSave={handleSaveAddress}
+      />
+
+      <SlotModal
+        open={isSlotModalOpen}
+        onClose={() => setIsSlotModalOpen(false)}
+        onConfirm={handleConfirmSlot}
+      />
+    </>
+  );
+};
+
+type EmptyCartStateProps = {
+  onBrowseTests: () => void;
+};
+
+const EmptyCartState = ({
+  onBrowseTests,
+}: EmptyCartStateProps) => {
+  return (
+    <AppCard className="flex min-h-[380px] flex-col items-center justify-center p-8 text-center shadow-none">
+      <div className="flex h-20 w-20 items-center justify-center rounded-full bg-primary-light text-primary">
+        <FlaskConical size={34} />
       </div>
-    </section>
+
+      <h2 className="mt-6 text-2xl font-black text-foreground">
+        Your cart is empty
+      </h2>
+
+      <p className="mt-2 max-w-md text-sm leading-6 text-muted-foreground">
+        Add lab tests or health packages to continue with your booking.
+      </p>
+
+      <AppButton
+        type="button"
+        className="mt-6"
+        onClick={onBrowseTests}
+      >
+        Browse Tests
+      </AppButton>
+
+      <div className="mt-8 flex items-center gap-2 text-xs font-semibold text-muted-foreground">
+        <ShieldCheck size={15} className="text-primary" />
+        Secure booking with NABL-accredited labs
+      </div>
+    </AppCard>
   );
 };
 

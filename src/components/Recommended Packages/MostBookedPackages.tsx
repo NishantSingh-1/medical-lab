@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
-import Button from "../common/Button";
-import Card from "../common/Card";
-import Badge from "../common/Badge";
+
+import { AppBadge } from "../common/AppBadge";
+import { AppButton } from "../common/AppButton";
+import { AppCard } from "../common/AppCard";
 import { packagesData } from "./RecommendedPackages";
 
 const MostBookedPackages = () => {
@@ -14,39 +15,40 @@ const MostBookedPackages = () => {
   }, []);
 
   return (
-    <div className="min-h-screen w-full bg-white px-4 pt-36 text-left font-sans md:px-8">
+    <div className="min-h-screen w-full bg-background px-4 pt-36 text-left md:px-8">
       <div className="mx-auto max-w-[1280px]">
-        <div className="border-primary mb-8 border-b pb-4">
-          <button
+        <div className="mb-8 border-b border-primary pb-4">
+          <AppButton
             type="button"
+            variant="ghost"
             onClick={() => navigate("/")}
-            className="text-primary mb-3 flex items-center gap-2 bg-transparent text-xs font-bold uppercase tracking-wider hover:underline"
+            className="mb-3 flex items-center gap-2 px-0 text-xs font-bold uppercase tracking-wider text-primary hover:bg-transparent hover:underline"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to Home
-          </button>
+          </AppButton>
 
-          <h1 className="text-dark text-2xl font-black tracking-tight">
+          <h1 className="text-2xl font-black tracking-tight text-foreground">
             Most Booked Packages
           </h1>
 
-          <p className="mt-0.5 text-xs font-normal text-gray-400">
+          <p className="mt-0.5 text-xs text-muted-foreground">
             Showing {packagesData.length} tests found in your selected area configurations.
           </p>
         </div>
 
         <div className="grid grid-cols-1 gap-6 pb-16 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {packagesData.map((pkg) => (
-            <Card
+            <AppCard
               key={pkg.id}
-              className="border-primary flex flex-col justify-between p-5 text-left transition-all duration-300 hover:shadow-md"
+              className="flex flex-col justify-between border-primary p-5 text-left transition-all duration-300 hover:shadow-md"
             >
               <div>
                 <div className="mb-4 flex items-center justify-between">
-                  <div className="bg-primary-light flex h-12 w-12 items-center justify-center rounded-full">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary-light">
                     <svg
                       viewBox="0 0 24 24"
-                      className="text-primary h-6 w-6"
+                      className="h-6 w-6 text-primary"
                       fill="none"
                       stroke="currentColor"
                       strokeWidth="2"
@@ -59,58 +61,54 @@ const MostBookedPackages = () => {
                     </svg>
                   </div>
 
-                  <Badge>✓ SAFE</Badge>
+                  <AppBadge>✓ SAFE</AppBadge>
                 </div>
 
-                <h3 className="text-dark mb-2 min-h-[40px] line-clamp-2 text-[14px] font-bold leading-snug">
+                <h3 className="mb-2 min-h-[40px] line-clamp-2 text-[14px] font-bold leading-snug text-foreground">
                   {pkg.title}
                 </h3>
 
                 <div className="mb-3">
-                  <Badge className="rounded-md">
+                  <AppBadge className="rounded-md">
                     Home Collection Available
-                  </Badge>
+                  </AppBadge>
                 </div>
 
-                <p className="mb-4 min-h-[32px] text-[11px] font-normal leading-relaxed text-gray-400">
+                <p className="mb-4 min-h-[32px] text-[11px] leading-relaxed text-muted-foreground">
                   {pkg.features}
                 </p>
               </div>
 
-              <div className="border-t border-gray-100 pt-3">
+              <div className="border-t border-border pt-3">
                 <div className="mb-4 flex items-baseline gap-1.5">
-                  <span className="text-dark text-lg font-black tracking-tight">
+                  <span className="text-lg font-black tracking-tight text-foreground">
                     ₹{pkg.actualPrice}
                   </span>
 
-                  <span className="text-xs text-gray-400 line-through">
+                  <span className="text-xs text-muted-foreground line-through">
                     ₹{pkg.marketPrice}
                   </span>
 
-                  <span className="text-primary text-[11px] font-bold">
+                  <span className="text-[11px] font-bold text-primary">
                     {pkg.discount}
                   </span>
                 </div>
 
                 <div className="grid w-full grid-cols-2 gap-2">
-                  <Button
+                  <AppButton
                     type="button"
                     variant="outline"
-                    className="rounded-lg py-2 text-xs"
+                    className="py-2 text-xs"
                   >
                     View Details
-                  </Button>
+                  </AppButton>
 
-                  <Button
-                    type="button"
-                    variant="primary"
-                    className="rounded-lg py-2 text-xs"
-                  >
+                  <AppButton type="button" className="py-2 text-xs">
                     Add To Cart
-                  </Button>
+                  </AppButton>
                 </div>
               </div>
-            </Card>
+            </AppCard>
           ))}
         </div>
       </div>

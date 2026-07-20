@@ -1,17 +1,81 @@
 @import "tailwindcss";
 @import "./styles/theme.css";
 
+/* =========================================
+   Tailwind Theme Tokens
+========================================= */
+
+@theme {
+  /* Brand */
+  --color-primary: var(--color-primary);
+  --color-primary-hover: var(--color-primary-hover);
+  --color-primary-light: var(--color-primary-light);
+
+  --color-secondary: var(--color-secondary);
+  --color-secondary-hover: var(--color-secondary-hover);
+  --color-secondary-light: var(--color-secondary-light);
+
+  /* Background */
+  --color-background: var(--color-background);
+  --color-surface: var(--color-surface);
+  --color-card: var(--color-card);
+
+  /* Text */
+  --color-foreground: var(--color-text);
+  --color-card-foreground: var(--color-card-foreground);
+  --color-muted: var(--color-muted);
+  --color-muted-foreground: var(--color-muted-foreground);
+
+  /* Border */
+  --color-border: var(--color-border);
+
+  /* Status */
+  --color-success: var(--color-success);
+  --color-warning: var(--color-warning);
+  --color-danger: var(--color-danger);
+  --color-info: var(--color-info);
+
+  /* Radius */
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+  --radius-2xl: var(--radius-2xl);
+
+  /* Shadow */
+  --shadow-card: var(--shadow-card);
+}
+
+/* =========================================
+   Base Styles
+========================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
-  background: #FFFDD0;
+  font-family: "Poppins", Arial, Helvetica, sans-serif;
+  background: var(--color-background);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+/* =========================================
+   Animations
+========================================= */
 
 @keyframes float {
   0% {
-    transform: translateY(0px);
+    transform: translateY(0);
   }
 
   50% {
@@ -19,94 +83,20 @@ body {
   }
 
   100% {
-    transform: translateY(0px);
+    transform: translateY(0);
   }
 }
 
 .animate-float {
   animation: float 4s ease-in-out infinite;
 }
+
 @keyframes loginDrawer {
   from {
     transform: translateX(100%);
   }
+
   to {
     transform: translateX(0);
   }
-}
-
-
-.btn-primary {
-  background-color: var(--color-primary);
-  color: white;
-  border-radius: var(--radius-md);
-  font-weight: 600;
-  transition: 0.2s ease;
-}
-
-.btn-primary:hover {
-  background-color: var(--color-primary-hover);
-}
-
-.btn-secondary {
-  background-color: var(--color-primary-light);
-  color: var(--color-primary);
-  border-radius: var(--radius-md);
-  font-weight: 600;
-}
-
-.btn-outline {
-  border: 1px solid var(--color-primary);
-  color: var(--color-primary);
-  border-radius: var(--radius-md);
-  transition: 0.2s ease;
-}
-
-.btn-outline:hover {
-  background-color: var(--color-primary);
-  color: white;
-}
-
-.input-field {
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: 16px 20px;
-  outline: none;
-}
-
-.input-field:focus {
-  border-color: var(--color-primary);
-}
-.card {
-  background: white;
-  border-radius: 24px;
-  border: 1px solid var(--color-border);
-  box-shadow: 0 4px 20px rgb(0 0 0 / 5%);
-}
-
-.text-primary {
-  color: var(--color-primary);
-}
-
-.text-dark {
-  color: var(--color-text-dark);
-}
-
-.text-muted {
-  color: var(--color-text-muted);
-}
-
-.bg-primary {
-  background-color: var(--color-primary);
-}
-
-.bg-primary-light {
-  background-color: var(--color-primary-light);
-}
-
-.border-primary {
-  border-color: var(--color-primary);
-}
-.accent-primary {
-  accent-color: var(--color-primary);
 }

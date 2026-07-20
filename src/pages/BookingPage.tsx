@@ -1,16 +1,35 @@
-import React, { useState } from "react";
+import { useState, type ChangeEvent, type FormEvent } from "react";
 import {
-  User,
-  Calendar,
-  MapPin,
-  ClipboardList,
-  ShieldCheck,
-  Home,
   Building2,
+  Calendar,
+  ClipboardList,
+  Home,
+  MapPin,
+  ShieldCheck,
+  User,
 } from "lucide-react";
 
+import { AppButton } from "@/components/common/AppButton";
+import { AppCard } from "@/components/common/AppCard";
+import { AppInput } from "@/components/common/AppInput";
+import { PatientPageContainer } from "@/features/patient-portal/shared/components/PatientPageContainer";
+import { PatientPageHeader } from "@/features/patient-portal/shared/components/PatientPageHeader";
+import { PatientSectionCard } from "@/features/patient-portal/shared/components/PatientSectionCard";
+
+type CollectionType = "home" | "lab";
+
+const timeSlots = [
+  "08:00 AM - 09:00 AM",
+  "09:00 AM - 10:00 AM",
+  "10:00 AM - 11:00 AM",
+  "11:00 AM - 12:00 PM",
+  "02:00 PM - 03:00 PM",
+  "04:00 PM - 05:00 PM",
+];
+
 const BookingPage = () => {
-  const [collectionType, setCollectionType] = useState<"home" | "lab">("home");
+  const [collectionType, setCollectionType] =
+    useState<CollectionType>("home");
 
   const [patientData, setPatientData] = useState({
     fullName: "",
@@ -23,322 +42,260 @@ const BookingPage = () => {
     pinCode: "",
   });
 
-  const timeSlots = [
-    "08:00 AM - 09:00 AM",
-    "09:00 AM - 10:00 AM",
-    "10:00 AM - 11:00 AM",
-    "11:00 AM - 12:00 PM",
-    "02:00 PM - 03:00 PM",
-    "04:00 PM - 05:00 PM",
-  ];
-
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    event: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
-    setPatientData({
-      ...patientData,
-      [e.target.name]: e.target.value,
-    });
+    setPatientData((current) => ({
+      ...current,
+      [event.target.name]: event.target.value,
+    }));
   };
 
-  const handleSubmitBooking = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmitBooking = (event: FormEvent) => {
+    event.preventDefault();
     alert(`Booking confirmed for ${patientData.fullName}`);
   };
 
-  const inputClass =
-    "w-full h-[50px] px-4 rounded-xl border border-slate-200 bg-slate-50 text-sm font-semibold text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-[#0f8a73] focus:bg-white focus:ring-4 focus:ring-teal-50";
-
-  const labelClass =
-    "text-[11px] font-black uppercase tracking-wide text-slate-500";
-
   return (
-    <div className="w-full min-h-screen bg-[#fdf6ee] pt-[190px] md:pt-36 pb-16 font-sans text-left">
-      <div className="max-w-7xl mx-auto px-4 md:px-8">
-        {/* Header */}
-        <div className="mb-8 text-center md:text-left">
-          <span className="inline-block mb-3 px-4 py-1.5 rounded-full bg-teal-50 border border-teal-100 text-[#0f8a73] text-xs font-black uppercase tracking-widest">
-            Easy Lab Test Booking
-          </span>
+    <PatientPageContainer>
+      <PatientPageHeader
+        badge="Easy Lab Test Booking"
+        title="Book New Test"
+        description="Enter patient details and choose your preferred date and time slot."
+      />
 
-          <h1 className="text-3xl md:text-5xl font-black text-slate-900 tracking-tight">
-            Book Your Lab Test
-          </h1>
+      <form
+        onSubmit={handleSubmitBooking}
+        className="grid grid-cols-1 gap-6 lg:grid-cols-12"
+      >
+        <div className="space-y-6 lg:col-span-8">
+          <PatientSectionCard title="Choose Collection Type">
+            <div className="grid gap-4 sm:grid-cols-2">
+              <CollectionTypeCard
+                active={collectionType === "home"}
+                icon={<Home size={20} />}
+                title="Home Sample Collection"
+                description="Technician will visit your home"
+                onClick={() => setCollectionType("home")}
+              />
 
-          <p className="mt-2 text-sm md:text-base text-slate-500 font-medium">
-            Enter patient details and choose your preferred date and time slot.
-          </p>
-        </div>
-
-        <form
-          onSubmit={handleSubmitBooking}
-          className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start"
-        >
-          {/* Left Form */}
-          <div className="lg:col-span-8 space-y-6">
-            {/* Collection Type */}
-            <div className="bg-white border border-slate-100 rounded-3xl p-5 md:p-6 shadow-sm">
-              <h2 className="text-sm font-black text-slate-800 mb-4">
-                Choose Collection Type
-              </h2>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <button
-                  type="button"
-                  onClick={() => setCollectionType("home")}
-                  className={`flex items-center gap-3 p-4 rounded-2xl border transition text-left ${
-                    collectionType === "home"
-                      ? "border-[#0f8a73] bg-teal-50 text-[#0f8a73] shadow-sm"
-                      : "border-slate-200 bg-white text-slate-700 hover:border-teal-200"
-                  }`}
-                >
-                  <span className="w-11 h-11 rounded-full bg-white flex items-center justify-center shadow-sm">
-                    <Home size={20} />
-                  </span>
-                  <span>
-                    <span className="block font-black text-sm">
-                      Home Sample Collection
-                    </span>
-                    <span className="block text-xs font-medium opacity-70 mt-1">
-                      Technician will visit your home
-                    </span>
-                  </span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setCollectionType("lab")}
-                  className={`flex items-center gap-3 p-4 rounded-2xl border transition text-left ${
-                    collectionType === "lab"
-                      ? "border-[#0f8a73] bg-teal-50 text-[#0f8a73] shadow-sm"
-                      : "border-slate-200 bg-white text-slate-700 hover:border-teal-200"
-                  }`}
-                >
-                  <span className="w-11 h-11 rounded-full bg-white flex items-center justify-center shadow-sm">
-                    <Building2 size={20} />
-                  </span>
-                  <span>
-                    <span className="block font-black text-sm">
-                      Visit Lab Centre
-                    </span>
-                    <span className="block text-xs font-medium opacity-70 mt-1">
-                      Visit nearest diagnostic centre
-                    </span>
-                  </span>
-                </button>
-              </div>
+              <CollectionTypeCard
+                active={collectionType === "lab"}
+                icon={<Building2 size={20} />}
+                title="Visit Lab Centre"
+                description="Visit nearest diagnostic centre"
+                onClick={() => setCollectionType("lab")}
+              />
             </div>
+          </PatientSectionCard>
 
-            {/* Patient Info */}
-            <div className="bg-white border border-slate-100 rounded-3xl p-5 md:p-6 shadow-sm">
-              <div className="flex items-center gap-2 mb-5 pb-4 border-b border-slate-100">
-                <User size={20} className="text-[#0f8a73]" />
-                <h2 className="text-lg font-black text-slate-900">
-                  Patient Information
-                </h2>
-              </div>
+          <PatientSectionCard
+            title="Patient Information"
+            description="Add patient basic details."
+          >
+            <div className="grid gap-5 sm:grid-cols-2">
+              <AppInput
+                name="fullName"
+                required
+                placeholder="Patient Full Name"
+                value={patientData.fullName}
+                onChange={handleChange}
+              />
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <div>
-                  <label className={labelClass}>Patient Full Name</label>
-                  <input
-                    name="fullName"
-                    type="text"
-                    required
-                    placeholder="e.g. Nishant Singh"
-                    value={patientData.fullName}
-                    onChange={handleChange}
-                    className={`${inputClass} mt-2`}
-                  />
-                </div>
+              <AppInput
+                name="mobile"
+                required
+                maxLength={10}
+                placeholder="Mobile Number"
+                value={patientData.mobile}
+                onChange={(event) =>
+                  setPatientData({
+                    ...patientData,
+                    mobile: event.target.value.replace(/\D/g, ""),
+                  })
+                }
+              />
 
-                <div>
-                  <label className={labelClass}>Mobile Number</label>
-                  <input
-                    name="mobile"
-                    type="tel"
-                    required
-                    placeholder="e.g. 9876543210"
-                    value={patientData.mobile}
-                    onChange={handleChange}
-                    className={`${inputClass} mt-2`}
-                  />
-                </div>
+              <AppInput
+                name="age"
+                required
+                type="number"
+                placeholder="Age"
+                value={patientData.age}
+                onChange={handleChange}
+              />
 
-                <div>
-                  <label className={labelClass}>Age</label>
-                  <input
-                    name="age"
-                    type="number"
-                    required
-                    placeholder="e.g. 21"
-                    value={patientData.age}
-                    onChange={handleChange}
-                    className={`${inputClass} mt-2`}
-                  />
-                </div>
-
-                <div>
-                  <label className={labelClass}>Gender</label>
-                  <select
-                    name="gender"
-                    value={patientData.gender}
-                    onChange={handleChange}
-                    className={`${inputClass} mt-2`}
-                  >
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Other">Other</option>
-                  </select>
-                </div>
-              </div>
+              <select
+                name="gender"
+                value={patientData.gender}
+                onChange={handleChange}
+                className="h-11 rounded-xl border border-border bg-background px-4 text-sm font-semibold outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+              >
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
             </div>
+          </PatientSectionCard>
 
-            {/* Address */}
-            {collectionType === "home" && (
-              <div className="bg-white border border-slate-100 rounded-3xl p-5 md:p-6 shadow-sm">
-                <div className="flex items-center gap-2 mb-5 pb-4 border-b border-slate-100">
-                  <MapPin size={20} className="text-[#0f8a73]" />
-                  <h2 className="text-lg font-black text-slate-900">
-                    Home Collection Address
-                  </h2>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-                  <div className="sm:col-span-2">
-                    <label className={labelClass}>Complete Address</label>
-                    <input
-                      name="address"
-                      type="text"
-                      required={collectionType === "home"}
-                      placeholder="Flat no, street, landmark"
-                      value={patientData.address}
-                      onChange={handleChange}
-                      className={`${inputClass} mt-2`}
-                    />
-                  </div>
-
-                  <div>
-                    <label className={labelClass}>Pin Code</label>
-                    <input
-                      name="pinCode"
-                      type="text"
-                      required={collectionType === "home"}
-                      placeholder="800001"
-                      value={patientData.pinCode}
-                      onChange={handleChange}
-                      className={`${inputClass} mt-2`}
-                    />
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Date & Slot */}
-            <div className="bg-white border border-slate-100 rounded-3xl p-5 md:p-6 shadow-sm">
-              <div className="flex items-center gap-2 mb-5 pb-4 border-b border-slate-100">
-                <Calendar size={20} className="text-[#0f8a73]" />
-                <h2 className="text-lg font-black text-slate-900">
-                  Appointment Date & Time
-                </h2>
-              </div>
-
-              <div className="max-w-sm mb-5">
-                <label className={labelClass}>Select Date</label>
-                <input
-                  name="selectedDate"
-                  type="date"
+          {collectionType === "home" && (
+            <PatientSectionCard
+              title="Home Collection Address"
+              description="Add sample collection address."
+            >
+              <div className="grid gap-5 sm:grid-cols-3">
+                <AppInput
+                  name="address"
                   required
-                  value={patientData.selectedDate}
+                  placeholder="Flat no, street, landmark"
+                  value={patientData.address}
                   onChange={handleChange}
-                  className={`${inputClass} mt-2`}
+                  className="sm:col-span-2"
+                />
+
+                <AppInput
+                  name="pinCode"
+                  required
+                  maxLength={6}
+                  placeholder="Pin Code"
+                  value={patientData.pinCode}
+                  onChange={(event) =>
+                    setPatientData({
+                      ...patientData,
+                      pinCode: event.target.value.replace(/\D/g, ""),
+                    })
+                  }
                 />
               </div>
+            </PatientSectionCard>
+          )}
 
-              <label className={labelClass}>Available Slots</label>
+          <PatientSectionCard
+            title="Appointment Date & Time"
+            description="Select preferred date and available slot."
+          >
+            <div className="max-w-sm">
+              <AppInput
+                name="selectedDate"
+                type="date"
+                required
+                value={patientData.selectedDate}
+                onChange={handleChange}
+              />
+            </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-3">
-                {timeSlots.map((slot) => (
-                  <button
-                    key={slot}
-                    type="button"
-                    onClick={() =>
-                      setPatientData({ ...patientData, selectedSlot: slot })
-                    }
-                    className={`h-[48px] rounded-xl border text-xs sm:text-sm font-black transition ${
-                      patientData.selectedSlot === slot
-                        ? "border-[#0f8a73] bg-teal-50 text-[#0f8a73]"
-                        : "border-slate-200 bg-slate-50 text-slate-600 hover:border-teal-200"
+            <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3">
+              {timeSlots.map((slot) => (
+                <button
+                  key={slot}
+                  type="button"
+                  onClick={() =>
+                    setPatientData({
+                      ...patientData,
+                      selectedSlot: slot,
+                    })
+                  }
+                  className={`h-12 rounded-xl border text-xs font-black transition sm:text-sm ${patientData.selectedSlot === slot
+                      ? "border-primary bg-primary-light text-primary"
+                      : "border-border bg-background text-muted-foreground hover:border-primary"
                     }`}
-                  >
-                    {slot}
-                  </button>
-                ))}
+                >
+                  {slot}
+                </button>
+              ))}
+            </div>
+          </PatientSectionCard>
+        </div>
+
+        <div className="lg:col-span-4">
+          <AppCard className="p-6 lg:sticky lg:top-24">
+            <div className="mb-5 flex items-center gap-2 border-b border-border pb-4">
+              <ClipboardList size={20} className="text-primary" />
+              <h2 className="text-lg font-black text-foreground">
+                Booking Summary
+              </h2>
+            </div>
+
+            <div className="space-y-4 text-sm">
+              <SummaryRow
+                label="Collection Type"
+                value={collectionType === "home" ? "Home Pickup" : "Lab Visit"}
+              />
+
+              <SummaryRow
+                label="Selected Slot"
+                value={patientData.selectedSlot}
+              />
+
+              <SummaryRow
+                label="Service Fee"
+                value={collectionType === "home" ? "₹150" : "FREE"}
+              />
+
+              <div className="rounded-2xl border border-primary/20 bg-primary-light p-4">
+                <p className="text-xs font-semibold text-muted-foreground">
+                  Your selected tests will be confirmed after patient details
+                  verification.
+                </p>
               </div>
             </div>
-          </div>
 
-          {/* Summary */}
-          <div className="lg:col-span-4">
-            <div className="bg-white border border-slate-100 rounded-3xl p-5 md:p-6 shadow-sm lg:sticky lg:top-36">
-              <div className="flex items-center gap-2 mb-5 pb-4 border-b border-slate-100">
-                <ClipboardList size={20} className="text-[#0f8a73]" />
-                <h2 className="text-lg font-black text-slate-900">
-                  Booking Summary
-                </h2>
-              </div>
+            <AppButton type="submit" className="mt-6 w-full">
+              Confirm Booking
+            </AppButton>
 
-              <div className="space-y-4 text-sm">
-                <div className="flex justify-between gap-4">
-                  <span className="text-slate-500 font-semibold">
-                    Collection Type
-                  </span>
-                  <span className="text-slate-900 font-black text-right">
-                    {collectionType === "home" ? "Home Pickup" : "Lab Visit"}
-                  </span>
-                </div>
-
-                <div className="flex justify-between gap-4">
-                  <span className="text-slate-500 font-semibold">
-                    Selected Slot
-                  </span>
-                  <span className="text-slate-900 font-black text-right">
-                    {patientData.selectedSlot}
-                  </span>
-                </div>
-
-                <div className="flex justify-between gap-4">
-                  <span className="text-slate-500 font-semibold">
-                    Service Fee
-                  </span>
-                  <span className="text-emerald-600 font-black">
-                    {collectionType === "home" ? "₹150" : "FREE"}
-                  </span>
-                </div>
-
-                <div className="bg-teal-50 rounded-2xl p-4 border border-teal-100 mt-5">
-                  <p className="text-xs text-slate-600 font-semibold leading-relaxed">
-                    Your selected tests will be confirmed after patient details
-                    verification.
-                  </p>
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                className="w-full mt-6 bg-[#0f8a73] hover:bg-[#0c7561] text-white font-black text-sm py-4 rounded-2xl shadow-md shadow-teal-100 transition"
-              >
-                Confirm Booking
-              </button>
-
-              <div className="flex items-center justify-center gap-2 text-[10px] font-black text-slate-400 tracking-wide uppercase mt-5">
-                <ShieldCheck size={14} className="text-[#0f8a73]" />
-                <span>NABL Accredited Lab</span>
-              </div>
+            <div className="mt-5 flex items-center justify-center gap-2 text-xs font-black uppercase text-muted-foreground">
+              <ShieldCheck size={14} className="text-primary" />
+              NABL Accredited Lab
             </div>
-          </div>
-        </form>
-      </div>
+          </AppCard>
+        </div>
+      </form>
+    </PatientPageContainer>
+  );
+};
+
+const CollectionTypeCard = ({
+  active,
+  icon,
+  title,
+  description,
+  onClick,
+}: {
+  active: boolean;
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+  onClick: () => void;
+}) => {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`flex items-center gap-3 rounded-2xl border p-4 text-left transition ${active
+          ? "border-primary bg-primary-light text-primary"
+          : "border-border bg-background text-foreground hover:border-primary"
+        }`}
+    >
+      <span className="flex h-11 w-11 items-center justify-center rounded-full bg-card">
+        {icon}
+      </span>
+
+      <span>
+        <span className="block text-sm font-black">{title}</span>
+        <span className="mt-1 block text-xs text-muted-foreground">
+          {description}
+        </span>
+      </span>
+    </button>
+  );
+};
+
+const SummaryRow = ({ label, value }: { label: string; value: string }) => {
+  return (
+    <div className="flex justify-between gap-4">
+      <span className="font-semibold text-muted-foreground">{label}</span>
+      <span className="text-right font-black text-foreground">{value}</span>
     </div>
   );
 };

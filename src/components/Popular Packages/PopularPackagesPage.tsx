@@ -1,8 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
-import Button from "../common/Button";
-import Card from "../common/Card";
-import Badge from "../common/Badge";
+
+import { AppBadge } from "../common/AppBadge";
+import { AppButton } from "../common/AppButton";
+import { AppCard } from "../common/AppCard";
 
 const allPopularPackages = [
   {
@@ -14,11 +15,19 @@ const allPopularPackages = [
     discount: "45% off",
     deliveryTime: "Report delivery- Same Day",
     icon: (
-      <svg viewBox="0 0 24 24" className="h-7 w-7 text-emerald-500" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        viewBox="0 0 24 24"
+        className="h-7 w-7 text-success"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
       </svg>
     ),
-    bgColor: "bg-emerald-50",
+    bgColor: "bg-success-light",
   },
   {
     id: "women-deluxe",
@@ -29,11 +38,21 @@ const allPopularPackages = [
     discount: "30% off",
     deliveryTime: "Report delivery- Same Day",
     icon: (
-      <svg viewBox="0 0 24 24" className="h-7 w-7 text-pink-500" fill="none" stroke="currentColor" strokeWidth="2">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4a4 4 0 100 8 4 4 0 000-8zM12 14v7M9 18h6" />
+      <svg
+        viewBox="0 0 24 24"
+        className="h-7 w-7 text-danger"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M12 4a4 4 0 100 8 4 4 0 000-8zM12 14v7M9 18h6"
+        />
       </svg>
     ),
-    bgColor: "bg-pink-50",
+    bgColor: "bg-danger-light",
   },
   {
     id: "healthy-heart",
@@ -44,11 +63,11 @@ const allPopularPackages = [
     discount: "20% off",
     deliveryTime: "Report delivery- Same Day",
     icon: (
-      <svg viewBox="0 0 24 24" className="h-7 w-7 text-red-500" fill="currentColor">
+      <svg viewBox="0 0 24 24" className="h-7 w-7 text-danger" fill="currentColor">
         <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
       </svg>
     ),
-    bgColor: "bg-red-50",
+    bgColor: "bg-danger-light",
   },
   {
     id: "senior-citizen",
@@ -59,12 +78,20 @@ const allPopularPackages = [
     discount: "50% off",
     deliveryTime: "Report delivery- Same Day",
     icon: (
-      <svg viewBox="0 0 24 24" className="h-7 w-7 text-blue-500" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        viewBox="0 0 24 24"
+        className="h-7 w-7 text-info"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <path d="M4.5 16.5c-1.5 1.5-2.5 3.5-2.5 5.5h20c0-2-1-4-2.5-5.5" />
         <circle cx="12" cy="7" r="4" />
       </svg>
     ),
-    bgColor: "bg-blue-50",
+    bgColor: "bg-info-light",
   },
   {
     id: "diabetes-advanced",
@@ -75,11 +102,19 @@ const allPopularPackages = [
     discount: "33% off",
     deliveryTime: "Report delivery- Same Day",
     icon: (
-      <svg viewBox="0 0 24 24" className="h-7 w-7 text-orange-500" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        viewBox="0 0 24 24"
+        className="h-7 w-7 text-warning"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
       </svg>
     ),
-    bgColor: "bg-orange-50",
+    bgColor: "bg-warning-light",
   },
   {
     id: "thyroid-care",
@@ -90,12 +125,20 @@ const allPopularPackages = [
     discount: "50% off",
     deliveryTime: "Report delivery- Same Day",
     icon: (
-      <svg viewBox="0 0 24 24" className="h-7 w-7 text-purple-500" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        viewBox="0 0 24 24"
+        className="h-7 w-7 text-secondary"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <path d="M4.5 10.5C3.5 12 3 14 3 16a5 5 0 0 0 10 0c0-2-.5-4-1.5-5.5" />
         <path d="M19.5 10.5C20.5 12 21 14 21 16a5 5 0 0 1-10 0c0-2 .5-4 1.5-5.5" />
       </svg>
     ),
-    bgColor: "bg-purple-50",
+    bgColor: "bg-secondary-light",
   },
   {
     id: "vitamin-check",
@@ -106,12 +149,20 @@ const allPopularPackages = [
     discount: "50% off",
     deliveryTime: "Report delivery- Same Day",
     icon: (
-      <svg viewBox="0 0 24 24" className="h-7 w-7 text-amber-500" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        viewBox="0 0 24 24"
+        className="h-7 w-7 text-warning"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <circle cx="12" cy="12" r="10" />
         <path d="M9 10h4a2 2 0 0 1 0 4H9M11 14l2 4" />
       </svg>
     ),
-    bgColor: "bg-amber-50",
+    bgColor: "bg-warning-light",
   },
   {
     id: "healthy-bones",
@@ -122,11 +173,19 @@ const allPopularPackages = [
     discount: "44% off",
     deliveryTime: "Report delivery- Same Day",
     icon: (
-      <svg viewBox="0 0 24 24" className="h-7 w-7 text-cyan-500" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        viewBox="0 0 24 24"
+        className="h-7 w-7 text-info"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <path d="M16 3a3 3 0 0 0-3 3v12a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3zM8 3a3 3 0 0 0-3 3v12a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3z" />
       </svg>
     ),
-    bgColor: "bg-cyan-50",
+    bgColor: "bg-info-light",
   },
   {
     id: "kidney-screening",
@@ -137,7 +196,15 @@ const allPopularPackages = [
     discount: "40% off",
     deliveryTime: "Report delivery- Same Day",
     icon: (
-      <svg viewBox="0 0 24 24" className="text-primary h-7 w-7" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        viewBox="0 0 24 24"
+        className="h-7 w-7 text-primary"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <path d="M12 3v18M3 12h18" />
       </svg>
     ),
@@ -152,11 +219,19 @@ const allPopularPackages = [
     discount: "50% off",
     deliveryTime: "Report delivery- Same Day",
     icon: (
-      <svg viewBox="0 0 24 24" className="h-7 w-7 text-lime-600" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        viewBox="0 0 24 24"
+        className="h-7 w-7 text-success"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
       </svg>
     ),
-    bgColor: "bg-lime-50",
+    bgColor: "bg-success-light",
   },
 ];
 
@@ -164,32 +239,33 @@ const PopularPackagesPage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen w-full select-none bg-slate-50/50 px-4 pb-12 pt-32 font-sans md:px-8">
+    <div className="min-h-screen w-full select-none bg-background px-4 pb-12 pt-32 md:px-8">
       <div className="mx-auto max-w-[1280px]">
         <div className="mb-10 flex flex-col space-y-2 text-left">
-          <button
+          <AppButton
             type="button"
+            variant="ghost"
             onClick={() => navigate(-1)}
-            className="text-primary flex w-fit items-center gap-2 bg-transparent text-sm font-bold transition"
+            className="flex w-fit items-center gap-2 px-0 text-sm font-bold text-primary hover:bg-transparent"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to Home
-          </button>
+          </AppButton>
 
-          <h1 className="text-dark text-2xl font-black tracking-tight md:text-3xl">
+          <h1 className="text-2xl font-black tracking-tight text-foreground md:text-3xl">
             All Popular Health Packages
           </h1>
 
-          <p className="text-muted text-sm font-normal">
+          <p className="text-sm font-normal text-muted-foreground">
             Select from our most comprehensive diagnostics profiles designed for complete analysis.
           </p>
         </div>
 
         <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {allPopularPackages.map((pkg) => (
-            <Card
+            <AppCard
               key={pkg.id}
-              className="border-primary flex min-h-[390px] w-full flex-col justify-between p-5 text-left transition-all duration-300 hover:shadow-lg"
+              className="flex min-h-[390px] w-full flex-col justify-between border-primary p-5 text-left transition-all duration-300 hover:shadow-lg"
             >
               <div className="mb-4 flex w-full items-center justify-between">
                 <div
@@ -198,61 +274,57 @@ const PopularPackagesPage = () => {
                   {pkg.icon}
                 </div>
 
-                <Badge>SAFE</Badge>
+                <AppBadge>SAFE</AppBadge>
               </div>
 
               <div className="mb-5 flex flex-1 flex-col">
-                <h3 className="text-dark mb-2 min-h-[42px] line-clamp-2 text-[15px] font-bold leading-snug tracking-tight">
+                <h3 className="mb-2 min-h-[42px] line-clamp-2 text-[15px] font-bold leading-snug tracking-tight text-foreground">
                   {pkg.title}
                 </h3>
 
-                <p className="mb-3 min-h-[54px] line-clamp-3 text-[12px] font-normal leading-relaxed text-gray-400">
+                <p className="mb-3 min-h-[54px] line-clamp-3 text-[12px] leading-relaxed text-muted-foreground">
                   {pkg.desc}
                 </p>
 
                 <div className="mb-3 self-start">
-                  <Badge>Home Collection Available</Badge>
+                  <AppBadge>Home Collection Available</AppBadge>
                 </div>
 
-                <p className="text-[11px] font-semibold tracking-tight text-gray-400">
+                <p className="text-[11px] font-semibold tracking-tight text-muted-foreground">
                   {pkg.deliveryTime}
                 </p>
               </div>
 
-              <div className="mt-auto border-t border-gray-100 pt-3">
+              <div className="mt-auto border-t border-border pt-3">
                 <div className="mb-4 flex items-baseline gap-1.5">
-                  <span className="text-dark text-xl font-black tracking-tight">
+                  <span className="text-xl font-black tracking-tight text-foreground">
                     ₹{pkg.actualPrice}
                   </span>
 
-                  <span className="text-xs font-medium text-gray-400 line-through">
+                  <span className="text-xs font-medium text-muted-foreground line-through">
                     ₹{pkg.marketPrice}
                   </span>
 
-                  <span className="text-primary text-[11px] font-bold">
+                  <span className="text-[11px] font-bold text-primary">
                     {pkg.discount}
                   </span>
                 </div>
 
                 <div className="grid w-full grid-cols-2 gap-2.5">
-                  <Button
+                  <AppButton
                     type="button"
                     variant="outline"
-                    className="flex items-center justify-center rounded-lg py-2 text-xs"
+                    className="py-2 text-xs"
                   >
                     View Details
-                  </Button>
+                  </AppButton>
 
-                  <Button
-                    type="button"
-                    variant="primary"
-                    className="flex items-center justify-center rounded-lg py-2 text-xs"
-                  >
+                  <AppButton type="button" className="py-2 text-xs">
                     Add To Cart
-                  </Button>
+                  </AppButton>
                 </div>
               </div>
-            </Card>
+            </AppCard>
           ))}
         </div>
       </div>

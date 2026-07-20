@@ -1,8 +1,8 @@
 import { ArrowLeft, Download, FileText, Printer, Share2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-import Button from "../../common/Button";
-import Card from "../../common/Card";
+import { AppButton } from "../../common/AppButton";
+import { AppCard } from "../../common/AppCard";
 
 const ReportViewerPage = () => {
   const navigate = useNavigate();
@@ -20,75 +20,82 @@ const ReportViewerPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-100 p-4 md:p-6">
-      <button
+    <div className="min-h-screen bg-background p-4 md:p-6">
+      <AppButton
         type="button"
+        variant="ghost"
         onClick={() => navigate(-1)}
-        className="text-primary mb-6 flex items-center gap-2 font-semibold"
+        className="mb-6 flex items-center gap-2"
       >
         <ArrowLeft size={20} />
         Back
-      </button>
+      </AppButton>
 
-      <Card className="p-6">
-        <div className="flex flex-col gap-4 border-b pb-5 md:flex-row md:items-center md:justify-between">
+      <AppCard className="p-6">
+        <div className="flex flex-col gap-4 border-b border-border pb-5 md:flex-row md:items-center md:justify-between">
           <div>
-            <h1 className="text-dark text-2xl font-bold">CBC Report</h1>
-            <p className="mt-1 text-sm text-gray-500">
+            <h1 className="text-2xl font-bold text-foreground">
+              CBC Report
+            </h1>
+
+            <p className="mt-1 text-sm text-muted-foreground">
               Booking ID: BK-1001 • Patient: Nishant Singh
             </p>
           </div>
 
           <div className="flex flex-wrap gap-3">
-            <Button
+            <AppButton
               onClick={handleDownload}
-              className="flex items-center gap-2 rounded-xl px-4 py-2"
+              className="flex items-center gap-2"
             >
               <Download size={18} />
               Download
-            </Button>
+            </AppButton>
 
-            <Button
+            <AppButton
               variant="secondary"
               onClick={handlePrint}
-              className="flex items-center gap-2 rounded-xl px-4 py-2"
+              className="flex items-center gap-2"
             >
               <Printer size={18} />
               Print
-            </Button>
+            </AppButton>
 
-            <Button
+            <AppButton
               variant="secondary"
               onClick={handleShare}
-              className="flex items-center gap-2 rounded-xl px-4 py-2"
+              className="flex items-center gap-2"
             >
               <Share2 size={18} />
               Share
-            </Button>
+            </AppButton>
           </div>
         </div>
 
-        <Card className="mt-6 flex min-h-[520px] items-center justify-center bg-slate-50 p-6">
+        <AppCard className="mt-6 flex min-h-[520px] items-center justify-center bg-slate p-6">
           <div className="max-w-md text-center">
-            <FileText size={70} className="text-primary mx-auto" />
+            <FileText
+              size={70}
+              className="mx-auto text-primary"
+            />
 
-            <h2 className="text-dark mt-4 text-xl font-bold">
+            <h2 className="mt-4 text-xl font-bold text-foreground">
               Report Preview
             </h2>
 
-            <p className="mt-2 text-gray-500">
+            <p className="mt-2 text-muted-foreground">
               PDF preview will appear here once backend report file is connected.
             </p>
 
-            <Button
+            <AppButton
               onClick={handleDownload}
-              className="mt-5 rounded-xl px-5 py-2"
+              className="mt-5"
             >
               Download Sample PDF
-            </Button>
+            </AppButton>
           </div>
-        </Card>
-      </Card>
+        </AppCard>
+      </AppCard>
     </div>
   );
 };

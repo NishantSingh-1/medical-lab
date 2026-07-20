@@ -2,11 +2,11 @@ import { Menu, Search, ShoppingCart, X } from "lucide-react";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
+import { AppButton } from "./common/AppButton";
+import { AppContainer } from "./common/AppContainer";
+import { AppInput } from "./common/AppInput";
 import { useCart } from "./context/CartContext";
 import NavbarCategories from "./NavbarCategories";
-import LoginPage from "./user/pages/LoginPage";
-import Button from "./common/Button";
-
 const navLinks = [
   { name: "Home", path: "/" },
   { name: "Contact", path: "/contact" },
@@ -18,7 +18,6 @@ const SEARCH_PLACEHOLDER = "Search For Lab Tests/Packages";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
-  const [loginOpen, setLoginOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [placeholderText, setPlaceholderText] = useState("");
 
@@ -28,14 +27,6 @@ const Navbar = () => {
 
   const textIndexRef = useRef(0);
   const isDeletingRef = useRef(false);
-
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-
-    if (params.get("login") === "true") {
-      setLoginOpen(true);
-    }
-  }, [location.search]);
 
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout>;
@@ -58,7 +49,6 @@ const Navbar = () => {
         setPlaceholderText("");
         textIndexRef.current = 0;
         isDeletingRef.current = false;
-
         timer = setTimeout(handleTypingTick, 500);
         return;
       }
@@ -67,15 +57,12 @@ const Navbar = () => {
     };
 
     timer = setTimeout(handleTypingTick, 500);
-
     return () => clearTimeout(timer);
   }, []);
 
   const handleSearchSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     if (!searchQuery.trim()) return;
-
     navigate("/tests");
   };
 
@@ -83,12 +70,12 @@ const Navbar = () => {
 
   return (
     <>
-      <header className="fixed left-0 top-0 z-50 flex w-full select-none flex-col border-b border-gray-100 bg-white/80 text-left font-sans backdrop-blur-lg">
-        <div className="mx-auto w-full max-w-7xl px-5">
+      <header className="fixed left-0 top-0 z-50 flex w-full select-none flex-col border-b border-border bg-card/80 text-left backdrop-blur-lg">
+        <AppContainer>
           <div className="flex h-20 items-center justify-between">
             <Link
               to="/"
-              className="text-primary text-3xl font-extrabold tracking-tight no-underline"
+              className="text-3xl font-extrabold tracking-tight text-primary no-underline"
             >
               MedLab
             </Link>
@@ -116,87 +103,73 @@ const Navbar = () => {
                 isActive={location.pathname === "/cart"}
               />
 
-              <Button
+              <AppButton
                 type="button"
                 variant="outline"
-                onClick={() => setLoginOpen(true)}
-                className="rounded-xl px-5 py-2.5"
+                onClick={() => navigate("/signin")}
               >
                 Login
-              </Button>
-            </div>
+              </AppButton>
 
-            <div className="flex items-center text-gray-700 lg:hidden">
               <button
                 type="button"
                 aria-label="Toggle mobile menu"
                 onClick={() => setOpen((current) => !current)}
-                className="border-none bg-transparent p-0 text-gray-700 outline-none transition hover:text-primary"
+                className="text-muted-foreground transition hover:text-primary lg:hidden"
               >
                 {open ? <X size={24} /> : <Menu size={24} />}
               </button>
             </div>
           </div>
-        </div>
+        </AppContainer>
 
         <div className="hidden w-full lg:block">
           <NavbarCategories />
         </div>
 
-        <div className="block w-full bg-white px-5 pb-5 lg:hidden">
-          <form
+        <div className="block w-full bg-card px-5 pb-5 lg:hidden">
+          <MobileSearchForm
+            placeholderText={placeholderText}
             onSubmit={handleSearchSubmit}
             onClick={() => navigate("/tests")}
-            className="border-primary flex w-full cursor-pointer items-center rounded-2xl border bg-slate-50 px-4 py-3.5 transition-all focus-within:border-primary"
-          >
-            <Search className="mr-2 h-4 w-4 shrink-0 text-gray-400" />
-
-            <input
-              type="text"
-              readOnly
-              placeholder={placeholderText}
-              className="w-full cursor-pointer border-none bg-transparent p-0 text-xs font-bold text-gray-700 placeholder-gray-400 outline-none"
-            />
-          </form>
+          />
         </div>
 
         {open && (
-          <div className="border-t border-gray-100 bg-white px-5 py-6 text-sm font-bold text-gray-700 shadow-xl lg:hidden">
+          <div className="border-t border-border bg-card px-5 py-6 text-sm font-bold text-muted-foreground shadow-lg lg:hidden">
             <div className="flex flex-col gap-4">
               {navLinks.map((item) => (
                 <Link
                   key={item.path}
                   to={item.path}
                   onClick={closeMobileMenu}
-                  className={`py-1 no-underline transition ${
-                    location.pathname === item.path
-                      ? "text-primary"
-                      : "text-gray-700 hover:text-primary"
-                  }`}
+                  className={`py-1 no-underline transition ${location.pathname === item.path
+                    ? "text-primary"
+                    : "hover:text-primary"
+                    }`}
                 >
                   {item.name}
                 </Link>
               ))}
 
-              <hr className="my-2 border-gray-100" />
+              <hr className="my-2 border-border" />
 
-              <Button
+              <AppButton
                 type="button"
                 variant="outline"
                 onClick={() => {
                   closeMobileMenu();
-                  setLoginOpen(true);
+                  navigate("/signin");
                 }}
-                className="rounded-xl py-3 text-xs font-black"
+                className="py-3 text-xs font-black"
               >
                 Login
-              </Button>
+              </AppButton>
             </div>
           </div>
         )}
       </header>
 
-      {loginOpen && <LoginPage onClose={() => setLoginOpen(false)} />}
     </>
   );
 };
@@ -213,14 +186,13 @@ const NavItem = ({ item, isActive }: NavItemProps) => {
   return (
     <Link
       to={item.path}
-      className={`relative text-sm font-bold no-underline transition duration-300 hover:text-primary ${
-        isActive ? "text-primary" : "text-gray-700"
-      }`}
+      className={`relative text-sm font-bold no-underline transition duration-300 hover:text-primary ${isActive ? "text-primary" : "text-muted-foreground"
+        }`}
     >
       {item.name}
 
       {isActive && (
-        <span className="bg-primary absolute -bottom-2 left-0 h-[3px] w-full rounded-full" />
+        <span className="absolute -bottom-2 left-0 h-[3px] w-full rounded-full bg-primary" />
       )}
     </Link>
   );
@@ -242,16 +214,46 @@ const SearchForm = ({
   return (
     <form
       onSubmit={onSubmit}
-      className="flex w-56 items-center rounded-xl border border-gray-200/80 bg-gray-50 px-3.5 py-2 transition-all focus-within:border-primary focus-within:bg-white focus-within:shadow-sm xl:w-72"
+      className="flex w-56 items-center rounded-xl border border-border bg-white px-3.5 py-2 transition-all focus-within:border-primary focus-within:bg-card focus-within:shadow-sm xl:w-72"
     >
-      <Search className="mr-2 h-4 w-4 shrink-0 text-gray-400" />
+      <Search className="mr-2 h-4 w-4 shrink-0 text-muted-foreground" />
 
-      <input
+      <AppInput
+        name="searchQuery"
         type="text"
         placeholder={placeholderText}
         value={searchQuery}
         onChange={(event) => setSearchQuery(event.target.value)}
-        className="w-full border-none bg-transparent p-0 text-xs font-medium text-gray-700 placeholder-gray-400 outline-none"
+        className="h-auto border-0 bg-transparent p-0 text-xs font-medium shadow-none focus-visible:ring-0"
+      />
+    </form>
+  );
+};
+
+type MobileSearchFormProps = {
+  placeholderText: string;
+  onSubmit: (event: FormEvent<HTMLFormElement>) => void;
+  onClick: () => void;
+};
+
+const MobileSearchForm = ({
+  placeholderText,
+  onSubmit,
+  onClick,
+}: MobileSearchFormProps) => {
+  return (
+    <form
+      onSubmit={onSubmit}
+      onClick={onClick}
+      className="flex w-full cursor-pointer items-center rounded-2xl border border-primary bg-white px-4 py-3.5 transition-all focus-within:border-primary"
+    >
+      <Search className="mr-2 h-4 w-4 shrink-0 text-muted-foreground" />
+
+      <AppInput
+        type="text"
+        readOnly
+        placeholder={placeholderText}
+        className="h-auto cursor-pointer border-0 bg-transparent p-0 text-xs font-bold shadow-none focus-visible:ring-0"
       />
     </form>
   );
@@ -266,11 +268,10 @@ const CartLink = ({ count, isActive }: CartLinkProps) => {
   return (
     <Link
       to="/cart"
-      className={`flex shrink-0 items-center gap-2 rounded-xl border px-4 py-2.5 no-underline transition duration-200 ${
-        isActive
-          ? "border-primary bg-primary-light text-primary"
-          : "border-gray-200 text-gray-800 hover:border-primary hover:text-primary"
-      }`}
+      className={`flex shrink-0 items-center gap-2 rounded-xl border px-4 py-2.5 no-underline transition duration-200 ${isActive
+        ? "border-primary bg-primary-light text-primary"
+        : "border-border text-foreground hover:border-primary hover:text-primary"
+        }`}
     >
       <ShoppingCart size={16} />
       <span>Cart ({count})</span>

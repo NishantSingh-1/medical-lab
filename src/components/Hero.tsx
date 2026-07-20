@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+import { AppButton } from "./common/AppButton";
 
 import image1 from "../assets/image1.jpeg";
 import image2 from "../assets/image2.jpeg";
@@ -103,11 +104,10 @@ const Hero = () => {
               type="button"
               aria-label={`Go to banner ${index + 1}`}
               onClick={() => goToSlide(index)}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                currentSlide === index
+              className={`h-2 rounded-full transition-all duration-300 ${currentSlide === index
                   ? "bg-primary w-7"
                   : "w-2 bg-slate-300 hover:bg-slate-400"
-              }`}
+                }`}
             />
           ))}
         </div>
@@ -121,18 +121,16 @@ const Hero = () => {
           className="flex w-full justify-center md:justify-start"
         >
           <div className="flex flex-wrap justify-center gap-4">
-            <Link
-              to="/booking"
-              className="bg-primary hover:bg-primary-hover rounded-full px-8 py-3.5 font-semibold text-white shadow-md transition"
-            >
-              Book Slot
+            <Link to="/booking">
+              <AppButton className="rounded-full px-8 py-3.5 shadow-md">
+                Book Slot
+              </AppButton>
             </Link>
 
-            <Link
-              to="/tests"
-              className="border-primary text-primary hover:bg-primary-light rounded-full border-2 px-8 py-3.5 font-semibold transition"
-            >
-              Explore Tests
+            <Link to="/tests">
+              <AppButton variant="outline" className="rounded-full px-8 py-3.5">
+                Explore Tests
+              </AppButton>
             </Link>
           </div>
         </motion.div>

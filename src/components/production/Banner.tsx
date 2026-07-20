@@ -1,13 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import Button from "../common/Button";
+
+import { AppButton } from "../common/AppButton";
 
 const PromotionalBanner = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="relative z-20 -mt-8 w-full select-none overflow-hidden bg-white py-0 font-sans md:-mt-16">
-      <div className="bg-primary relative flex min-h-[300px] w-full items-center py-6 shadow-lg md:min-h-[340px] md:py-8">
+    <section className="relative z-20 -mt-8 w-full select-none overflow-hidden bg-background py-0 md:-mt-16">
+      <div className="relative flex min-h-[300px] w-full items-center bg-primary py-6 shadow-lg md:min-h-[340px] md:py-8">
         <div className="pointer-events-none absolute bottom-0 right-0 top-0 hidden w-1/3 rounded-l-full bg-white/[0.03] md:block" />
         <div className="pointer-events-none absolute bottom-0 left-0 h-48 w-48 rounded-full bg-white/[0.02] blur-xl" />
 
@@ -18,7 +19,7 @@ const PromotionalBanner = () => {
               <span className="text-amber-300">MedLab Labs</span>
             </h2>
 
-            <div className="max-w-xl space-y-3 text-xs font-normal leading-relaxed text-white/90 md:text-[13px]">
+            <div className="max-w-xl space-y-3 text-xs leading-relaxed text-white/90 md:text-[13px]">
               <p>
                 MedLab is one of the most trusted players in diagnostics today,
                 with a network of fully automated labs across major cities in
@@ -35,24 +36,24 @@ const PromotionalBanner = () => {
             </div>
 
             <div className="pt-2">
-              <Button
+              <AppButton
                 type="button"
                 variant="secondary"
                 onClick={() => navigate("/xpert-health-package")}
-                className="group flex w-fit items-center gap-2 rounded-full bg-white px-6 py-2.5 text-xs font-bold text-gray-800 shadow-md hover:bg-gray-100 active:scale-95"
+                className="group flex w-fit items-center gap-2 rounded-full bg-card px-6 py-2.5 text-xs font-bold text-foreground shadow-md hover:bg-muted active:scale-95"
               >
                 Know more
-                <ArrowRight className="h-4 w-4 text-gray-600 transition-transform duration-150 group-hover:translate-x-1" />
-              </Button>
+                <ArrowRight className="h-4 w-4 text-muted-foreground transition-transform duration-150 group-hover:translate-x-1" />
+              </AppButton>
             </div>
           </div>
 
           <div className="relative flex w-full flex-col items-center justify-center md:col-span-5">
-            <div className="group relative aspect-video w-full overflow-hidden rounded-2xl border-2 border-amber-400/80 shadow-lg">
+            <div className="group relative aspect-video w-full overflow-hidden rounded-2xl border-2 border-warning shadow-lg">
               <img
                 src="https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&q=80&w=600"
                 alt="MedLab Laboratory Testing"
-                className="h-full w-full object-cover grayscale-25 transition-transform duration-300 group-hover:scale-102"
+                className="h-full w-full object-cover grayscale-25 transition-transform duration-300 group-hover:scale-105"
               />
 
               <div className="absolute inset-0 bg-black/20 transition-all group-hover:bg-black/25" />
@@ -62,7 +63,7 @@ const PromotionalBanner = () => {
                 className="absolute inset-0 flex items-center justify-center"
                 aria-label="Play video"
               >
-                <span className="flex h-10 w-14 items-center justify-center rounded-xl bg-red-500 shadow-md shadow-black/20 transition-colors duration-200 group-hover:bg-red-600">
+                <span className="flex h-10 w-14 items-center justify-center rounded-xl bg-danger shadow-md shadow-black/20 transition-colors duration-200 hover:opacity-90">
                   <svg
                     viewBox="0 0 24 24"
                     className="h-6 w-6 fill-current text-white"

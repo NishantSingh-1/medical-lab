@@ -1,7 +1,8 @@
 import { useState } from "react";
-import Button from "./common/Button";
-import Card from "./common/Card";
-import Badge from "./common/Badge";
+
+import { AppBadge } from "./common/AppBadge";
+import { AppButton } from "./common/AppButton";
+import { AppCard } from "./common/AppCard";
 
 const CATEGORY_MEGA_DATA = {
   "Full Body Checkup": {
@@ -304,7 +305,7 @@ const NavbarCategories = () => {
 
   return (
     <div
-      className="bg-primary relative block w-full select-none border-t border-white/10"
+      className="relative block w-full select-none border-t border-white/10 bg-primary"
       onMouseLeave={() => setActiveTab(null)}
     >
       <div className="mx-auto flex max-w-7xl items-center gap-1 px-5 text-white sm:gap-2">
@@ -321,9 +322,9 @@ const NavbarCategories = () => {
             key={category}
             type="button"
             onMouseEnter={() => setActiveTab(category)}
-            className={`flex items-center gap-1 border-b-2 px-3 py-2.5 text-xs font-normal tracking-wide transition-all md:text-[13px] ${
+            className={`flex items-center gap-1 border-b-2 px-3 py-2.5 text-xs tracking-wide transition-all md:text-[13px] ${
               activeTab === category
-                ? "border-orange-500 bg-white text-primary"
+                ? "border-warning bg-card text-primary"
                 : "border-transparent text-white hover:bg-black/5"
             }`}
           >
@@ -339,11 +340,11 @@ const NavbarCategories = () => {
         <>
           <div className="pointer-events-none fixed inset-0 z-40 bg-black/40" />
 
-          <div className="absolute left-0 top-full z-50 min-h-[340px] w-full border-t border-gray-100 bg-white py-6 text-gray-800 shadow-2xl">
+          <div className="absolute left-0 top-full z-50 min-h-[340px] w-full border-t border-border bg-card py-6 text-foreground shadow-2xl">
             <div className="mx-auto grid max-w-7xl grid-cols-12 gap-6 px-5">
-              <Card className="col-span-3 flex flex-col justify-between border-teal-100/50 bg-gradient-to-b from-teal-50/50 to-emerald-50/30 p-5">
+              <AppCard className="col-span-3 flex flex-col justify-between border-primary-light bg-primary-light/40 p-5">
                 <div>
-                  <h3 className="text-dark mb-4 text-sm font-bold leading-tight md:text-base">
+                  <h3 className="mb-4 text-sm font-bold leading-tight text-foreground md:text-base">
                     {activeCategoryData.heading}
                   </h3>
 
@@ -351,41 +352,41 @@ const NavbarCategories = () => {
                     {activeCategoryData.benefits.map((benefit) => (
                       <li
                         key={benefit}
-                        className="flex items-start gap-2.5 text-xs leading-normal text-gray-600"
+                        className="flex items-start gap-2.5 text-xs leading-normal text-muted-foreground"
                       >
-                        <span className="text-primary mt-0.5 shrink-0">●</span>
+                        <span className="mt-0.5 shrink-0 text-primary">●</span>
                         <span>{benefit}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                <Button
+                <AppButton
                   type="button"
-                  className="mt-6 flex w-full items-center justify-center gap-1 rounded-xl bg-orange-500 py-3 text-xs font-bold text-white hover:bg-orange-600"
+                  className="mt-6 flex w-full items-center justify-center gap-1 bg-warning py-3 text-xs font-bold text-white hover:bg-warning/90"
                 >
                   <span>Talk to a Health Advisor</span>
                   <span>➔</span>
-                </Button>
-              </Card>
+                </AppButton>
+              </AppCard>
 
               <div className="col-span-9 flex flex-col gap-4">
-                <h4 className="border-b border-gray-100 pb-1.5 text-[11px] font-bold uppercase tracking-wider text-gray-500">
+                <h4 className="border-b border-border pb-1.5 text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
                   Preventive Packages for {activeTab}
                 </h4>
 
                 <div className="grid grid-cols-3 gap-4">
                   {activeCategoryData.packages.map((pkg) => (
-                    <Card
+                    <AppCard
                       key={pkg.title}
                       className="flex min-h-[220px] flex-col justify-between p-4 transition-all hover:border-primary hover:shadow-md"
                     >
                       <div>
-                        <h5 className="text-dark min-h-[36px] line-clamp-2 text-xs font-bold leading-snug md:text-[13px]">
+                        <h5 className="min-h-[36px] line-clamp-2 text-xs font-bold leading-snug text-foreground md:text-[13px]">
                           {pkg.title}
                         </h5>
 
-                        <div className="mt-3 flex items-center gap-3 text-[11px] text-gray-500">
+                        <div className="mt-3 flex items-center gap-3 text-[11px] text-muted-foreground">
                           <div className="flex items-center gap-1">
                             <span>🧪</span>
                             <span>{pkg.tests}</span>
@@ -398,29 +399,29 @@ const NavbarCategories = () => {
                         </div>
                       </div>
 
-                      <div className="mt-4 border-t border-dashed border-gray-100 pt-3">
+                      <div className="mt-4 border-t border-dashed border-border pt-3">
                         <div className="mb-2 flex items-baseline gap-2">
-                          <span className="text-[11px] text-gray-400 line-through">
+                          <span className="text-[11px] text-muted-foreground line-through">
                             ₹{pkg.oldPrice}
                           </span>
 
-                          <span className="text-dark text-base font-extrabold md:text-lg">
+                          <span className="text-base font-extrabold text-foreground md:text-lg">
                             ₹{pkg.price}
                           </span>
 
-                          <Badge variant="success" className="ml-auto">
+                          <AppBadge variant="success" className="ml-auto">
                             70% OFF
-                          </Badge>
+                          </AppBadge>
                         </div>
 
-                        <Button
+                        <AppButton
                           type="button"
-                          className="w-full rounded-xl py-2.5 text-xs"
+                          className="w-full py-2.5 text-xs"
                         >
                           Book Now
-                        </Button>
+                        </AppButton>
                       </div>
-                    </Card>
+                    </AppCard>
                   ))}
                 </div>
               </div>

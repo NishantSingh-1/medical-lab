@@ -6,9 +6,10 @@ import {
   ShieldAlert,
   ClipboardCheck,
 } from "lucide-react";
-import Button from "../common/Button";
-import Card from "../common/Card";
-import Badge from "../common/Badge";
+
+import { AppBadge } from "../common/AppBadge";
+import { AppButton } from "../common/AppButton";
+import { AppCard } from "../common/AppCard";
 
 const parameters = [
   "Thyroid Profile (T3, T4, TSH)",
@@ -44,52 +45,53 @@ const XpertPackageDetails = () => {
   }, []);
 
   return (
-    <div className="min-h-screen w-full bg-[#fcfcfc] px-4 pb-16 pt-36 text-left font-sans md:px-8">
+    <div className="min-h-screen w-full bg-background px-4 pb-16 pt-36 text-left md:px-8">
       <div className="mx-auto max-w-4xl">
-        <button
+        <AppButton
           type="button"
+          variant="ghost"
           onClick={() => navigate("/")}
-          className="text-primary mb-5 flex items-center gap-2 bg-transparent text-xs font-bold uppercase tracking-wider hover:underline"
+          className="mb-5 flex items-center gap-2 px-0 text-xs font-bold uppercase tracking-wider text-primary hover:bg-transparent hover:underline"
         >
           <ArrowLeft className="h-4 w-4" />
           Back to Home
-        </button>
+        </AppButton>
 
-        <section className="bg-primary mb-8 rounded-3xl p-6 text-white shadow-md md:p-8">
+        <section className="mb-8 rounded-3xl bg-primary p-6 text-white shadow-md md:p-8">
           <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
             <div>
-              <Badge className="bg-white/20 text-white">
+              <AppBadge className="bg-white/20 text-white">
                 Most Recommended
-              </Badge>
+              </AppBadge>
 
               <h1 className="mt-2.5 text-2xl font-black tracking-tight md:text-3xl">
                 MedLab Xpert Full Body Package
               </h1>
 
-              <p className="mt-1 text-xs font-medium text-teal-50/70 md:text-sm">
+              <p className="mt-1 text-xs font-medium text-white/75 md:text-sm">
                 Complete physiological mapping for preventive wellness auditing
               </p>
             </div>
 
-            <div className="min-w-[130px] shrink-0 rounded-2xl bg-white p-4 text-center">
-              <span className="block text-xs font-medium text-gray-400 line-through">
+            <div className="min-w-[130px] shrink-0 rounded-2xl bg-card p-4 text-center">
+              <span className="block text-xs font-medium text-muted-foreground line-through">
                 ₹2,999
               </span>
 
-              <span className="my-0.5 block text-2xl font-black tracking-tight text-gray-900">
+              <span className="my-0.5 block text-2xl font-black tracking-tight text-foreground">
                 ₹1,499
               </span>
 
-              <Badge>50% Special Off</Badge>
+              <AppBadge>50% Special Off</AppBadge>
             </div>
           </div>
         </section>
 
         <div className="grid grid-cols-1 items-start gap-8 md:grid-cols-12">
           <div className="space-y-6 md:col-span-8">
-            <Card className="p-6">
-              <h3 className="text-dark mb-4 flex items-center gap-2 border-b border-gray-100 pb-3 text-base font-extrabold">
-                <ClipboardCheck className="text-primary h-5 w-5" />
+            <AppCard className="p-6">
+              <h3 className="mb-4 flex items-center gap-2 border-b border-border pb-3 text-base font-extrabold text-foreground">
+                <ClipboardCheck className="h-5 w-5 text-primary" />
                 Included Test Parameters (85+)
               </h3>
 
@@ -97,22 +99,22 @@ const XpertPackageDetails = () => {
                 {parameters.map((parameter) => (
                   <div
                     key={parameter}
-                    className="flex items-start gap-2 text-xs font-medium text-gray-600"
+                    className="flex items-start gap-2 text-xs font-medium text-muted-foreground"
                   >
-                    <CheckCircle2 className="text-primary mt-0.5 h-4 w-4 shrink-0" />
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                     <span>{parameter}</span>
                   </div>
                 ))}
               </div>
-            </Card>
+            </AppCard>
 
-            <Card className="p-6">
-              <h3 className="text-dark mb-3 flex items-center gap-2 text-base font-extrabold">
-                <ShieldAlert className="text-primary h-5 w-5" />
+            <AppCard className="p-6">
+              <h3 className="mb-3 flex items-center gap-2 text-base font-extrabold text-foreground">
+                <ShieldAlert className="h-5 w-5 text-primary" />
                 Pre-test Preparations
               </h3>
 
-              <ul className="list-disc space-y-2 pl-5 text-xs font-medium leading-relaxed text-gray-500">
+              <ul className="list-disc space-y-2 pl-5 text-xs font-medium leading-relaxed text-muted-foreground">
                 <li>
                   10-12 hours of strict fasting is required overnight before
                   sample collection.
@@ -126,11 +128,11 @@ const XpertPackageDetails = () => {
                   prior to screening.
                 </li>
               </ul>
-            </Card>
+            </AppCard>
           </div>
 
-          <Card className="space-y-4 p-5 text-center md:col-span-4">
-            <h4 className="text-dark text-sm font-black uppercase tracking-tight">
+          <AppCard className="space-y-4 p-5 text-center md:col-span-4">
+            <h4 className="text-sm font-black uppercase tracking-tight text-foreground">
               Booking Process
             </h4>
 
@@ -138,27 +140,26 @@ const XpertPackageDetails = () => {
               {bookingSteps.map((item) => (
                 <div
                   key={item.step}
-                  className="rounded-xl border border-gray-100 bg-gray-50 p-3 text-left"
+                  className="rounded-xl border border-border bg-muted p-3 text-left"
                 >
-                  <span className="text-primary block text-[10px] font-bold uppercase tracking-wider">
+                  <span className="block text-[10px] font-bold uppercase tracking-wider text-primary">
                     {item.step}
                   </span>
 
-                  <p className="mt-0.5 text-xs font-bold text-gray-600">
+                  <p className="mt-0.5 text-xs font-bold text-muted-foreground">
                     {item.title}
                   </p>
                 </div>
               ))}
             </div>
 
-            <Button
+            <AppButton
               type="button"
-              variant="primary"
-              className="mt-2 w-full rounded-xl py-3 text-xs font-extrabold tracking-wide md:text-sm"
+              className="mt-2 w-full py-3 text-xs font-extrabold tracking-wide md:text-sm"
             >
               Book Appointment Now
-            </Button>
-          </Card>
+            </AppButton>
+          </AppCard>
         </div>
       </div>
     </div>

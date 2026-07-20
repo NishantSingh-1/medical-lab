@@ -1,108 +1,134 @@
-import { ArrowLeft, CalendarDays, Clock, FileText, MapPin } from "lucide-react";
+import { type ReactNode } from "react";
+import {
+  ArrowLeft,
+  CalendarDays,
+  Clock,
+  FileText,
+  MapPin,
+} from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-import Button from "../../common/Button";
-import Card from "../../common/Card";
-import Badge from "../../common/Badge";
+import { AppButton } from "../../common/AppButton";
+import { AppCard } from "../../common/AppCard";
+import { AppBadge } from "../../common/AppBadge";
 
 const TestDetailsPage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-slate-100 p-6">
-      <button
+    <div className="min-h-screen bg-background p-6">
+      <AppButton
         type="button"
+        variant="ghost"
         onClick={() => navigate(-1)}
-        className="text-primary mb-6 flex items-center gap-2 font-semibold"
+        className="mb-6 flex items-center gap-2 p-0 text-primary hover:bg-transparent"
       >
         <ArrowLeft size={20} />
         Back
-      </button>
+      </AppButton>
 
-      <Card className="p-8">
-        <h1 className="text-dark text-3xl font-bold">CBC Test</h1>
+      <AppCard className="p-8">
+        <h1 className="text-3xl font-bold text-foreground">
+          CBC Test
+        </h1>
 
-        <p className="mt-2 text-gray-500">Booking ID : BK-1001</p>
+        <p className="mt-2 text-muted-foreground">
+          Booking ID : BK-1001
+        </p>
 
         <div className="mt-8 grid gap-6 md:grid-cols-2">
           <InfoCard title="Patient Details">
             <p>
-              <b>Name :</b> Nishant Singh
+              <strong>Name :</strong> Nishant Singh
             </p>
+
             <p className="mt-2">
-              <b>Phone :</b> +91 7654129286
+              <strong>Phone :</strong> +91 7654129286
             </p>
+
             <p className="mt-2">
-              <b>Age :</b> 25
+              <strong>Age :</strong> 25
             </p>
+
             <p className="mt-2">
-              <b>Gender :</b> Male
+              <strong>Gender :</strong> Male
             </p>
           </InfoCard>
 
           <InfoCard title="Appointment">
-            <InfoRow icon={<CalendarDays />} text="26 June 2026" />
-            <InfoRow icon={<Clock />} text="10:30 AM" />
-            <InfoRow icon={<MapPin />} text="Home Sample Collection" />
+            <InfoRow icon={<CalendarDays size={18} />} text="26 June 2026" />
+            <InfoRow icon={<Clock size={18} />} text="10:30 AM" />
+            <InfoRow
+              icon={<MapPin size={18} />}
+              text="Home Sample Collection"
+            />
           </InfoCard>
         </div>
 
         <div className="mt-6 grid gap-6 md:grid-cols-2">
           <InfoCard title="Payment">
             <p>Total Amount : ₹499</p>
-            <Badge variant="success" className="mt-2">
+
+            <AppBadge
+              variant="success"
+              className="mt-2"
+            >
               Paid
-            </Badge>
+            </AppBadge>
           </InfoCard>
 
           <InfoCard title="Test Status">
-            <Badge variant="warning">Sample Collection Pending</Badge>
+            <AppBadge variant="warning">
+              Sample Collection Pending
+            </AppBadge>
           </InfoCard>
         </div>
 
         <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-          <Button className="flex items-center gap-2 rounded-xl px-6 py-3">
+          <AppButton className="flex items-center gap-2">
             <FileText size={18} />
             Download Report
-          </Button>
+          </AppButton>
 
-          <Button className="rounded-xl bg-red-600 px-6 py-3 text-white hover:bg-red-700">
+          <AppButton
+            variant="destructive"
+            className="text-white"
+          >
             Cancel Booking
-          </Button>
+          </AppButton>
         </div>
-      </Card>
+      </AppCard>
     </div>
   );
 };
 
-const InfoCard = ({
-  title,
-  children,
-}: {
+type InfoCardProps = {
   title: string;
-  children: React.ReactNode;
-}) => {
-  return (
-    <Card className="p-5">
-      <h3 className="text-dark mb-4 text-lg font-bold">{title}</h3>
-      <div className="text-sm text-gray-700">{children}</div>
-    </Card>
-  );
+  children: ReactNode;
 };
 
-const InfoRow = ({
-  icon,
-  text,
-}: {
-  icon: React.ReactNode;
-  text: string;
-}) => {
-  return (
-    <div className="mb-3 flex gap-2 last:mb-0">
-      <span className="text-primary">{icon}</span>
-      <span>{text}</span>
+const InfoCard = ({ title, children }: InfoCardProps) => (
+  <AppCard className="p-5">
+    <h3 className="mb-4 text-lg font-bold text-foreground">
+      {title}
+    </h3>
+
+    <div className="space-y-2 text-sm text-muted-foreground">
+      {children}
     </div>
-  );
+  </AppCard>
+);
+
+type InfoRowProps = {
+  icon: ReactNode;
+  text: string;
 };
+
+const InfoRow = ({ icon, text }: InfoRowProps) => (
+  <div className="flex items-center gap-3">
+    <span className="text-primary">{icon}</span>
+    <span>{text}</span>
+  </div>
+);
 
 export default TestDetailsPage;

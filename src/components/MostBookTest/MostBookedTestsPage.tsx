@@ -1,7 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
-import Button from "../common/Button";
-import Card from "../common/Card";
+
+import { AppBadge } from "../common/AppBadge";
+import { AppButton } from "../common/AppButton";
+import { AppCard } from "../common/AppCard";
 
 const allMostBookedTests = [
   {
@@ -90,38 +92,39 @@ const MostBookedTestsPage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen w-full select-none bg-slate-50/50 px-4 pb-12 pt-36 font-sans md:px-8">
+    <div className="min-h-screen w-full select-none bg-background px-4 pb-12 pt-36 md:px-8">
       <div className="mx-auto max-w-[1280px]">
         <div className="mb-10 flex flex-col space-y-2 text-left">
-          <button
+          <AppButton
             type="button"
+            variant="ghost"
             onClick={() => navigate(-1)}
-            className="text-primary flex w-fit items-center gap-2 bg-transparent text-sm font-bold transition"
+            className="flex w-fit items-center gap-2 px-0 text-sm font-bold text-primary hover:bg-transparent"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to Home
-          </button>
+          </AppButton>
 
-          <h1 className="text-dark text-2xl font-black tracking-tight md:text-3xl">
+          <h1 className="text-2xl font-black tracking-tight text-foreground md:text-3xl">
             Most Booked Tests
           </h1>
 
-          <p className="text-muted text-sm font-normal">
+          <p className="text-sm font-normal text-muted-foreground">
             Showing 10 tests found in your selected area configurations.
           </p>
         </div>
 
         <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {allMostBookedTests.map((pkg) => (
-            <Card
+            <AppCard
               key={pkg.id}
-              className="border-primary flex min-h-[360px] w-full flex-col justify-between p-6 text-left transition-all duration-300 hover:shadow-lg"
+              className="flex min-h-[360px] w-full flex-col justify-between border-primary p-6 text-left transition-all duration-300 hover:shadow-lg"
             >
               <div className="mb-6 flex h-14 w-full shrink-0 items-center justify-between">
-                <div className="bg-primary-light flex h-14 w-14 items-center justify-center rounded-full">
+                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary-light">
                   <svg
                     viewBox="0 0 24 24"
-                    className="text-primary h-7 w-7"
+                    className="h-7 w-7 text-primary"
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="2"
@@ -136,61 +139,57 @@ const MostBookedTestsPage = () => {
                   </svg>
                 </div>
 
-                <span className="text-primary rounded text-[11px] font-bold uppercase tracking-wider">
+                <AppBadge variant="outline" className="text-[11px]">
                   ✓ SAFE
-                </span>
+                </AppBadge>
               </div>
 
               <div className="flex flex-grow flex-col justify-start pt-2 text-left">
-                <h3 className="text-dark mb-4 min-h-[44px] text-[15px] font-bold leading-snug tracking-tight">
+                <h3 className="mb-4 min-h-[44px] text-[15px] font-bold leading-snug tracking-tight text-foreground">
                   {pkg.title}
                 </h3>
 
                 <div className="mb-4">
-                  <span className="bg-primary-light text-primary inline-block rounded-full px-3 py-1 text-[11px] font-bold">
+                  <AppBadge className="px-3 py-1 text-[11px]">
                     Home Collection Available
-                  </span>
+                  </AppBadge>
                 </div>
 
-                <p className="mt-1 text-[12px] font-medium tracking-tight text-gray-400">
+                <p className="mt-1 text-[12px] font-medium tracking-tight text-muted-foreground">
                   {pkg.deliveryTime}
                 </p>
               </div>
 
-              <div className="shrink-0 border-t border-gray-100 pt-4">
+              <div className="shrink-0 border-t border-border pt-4">
                 <div className="mb-4 flex items-baseline gap-1.5">
-                  <span className="text-dark text-xl font-black tracking-tight">
+                  <span className="text-xl font-black tracking-tight text-foreground">
                     ₹{pkg.actualPrice}
                   </span>
 
-                  <span className="text-xs font-medium text-gray-400 line-through">
+                  <span className="text-xs font-medium text-muted-foreground line-through">
                     ₹{pkg.marketPrice}
                   </span>
 
-                  <span className="text-primary text-[12px] font-bold">
+                  <span className="text-[12px] font-bold text-primary">
                     {pkg.discount}
                   </span>
                 </div>
 
                 <div className="grid w-full grid-cols-2 gap-3">
-                  <Button
+                  <AppButton
                     type="button"
                     variant="outline"
-                    className="flex items-center justify-center rounded-xl py-2.5 text-xs"
+                    className="py-2.5 text-xs"
                   >
                     View Details
-                  </Button>
+                  </AppButton>
 
-                  <Button
-                    type="button"
-                    variant="primary"
-                    className="flex items-center justify-center rounded-xl py-2.5 text-xs"
-                  >
+                  <AppButton type="button" className="py-2.5 text-xs">
                     Add To Cart
-                  </Button>
+                  </AppButton>
                 </div>
               </div>
-            </Card>
+            </AppCard>
           ))}
         </div>
       </div>

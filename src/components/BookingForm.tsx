@@ -1,6 +1,6 @@
-import Button from "./common/Button";
-import Card from "./common/Card";
-import Input from "./common/Input";
+import { AppButton } from "./common/AppButton";
+import { AppCard } from "./common/AppCard";
+import { AppInput } from "./common/AppInput";
 
 const slots = [
   "09:00 AM",
@@ -23,12 +23,12 @@ const BookingForm = () => {
           </p>
         </div>
 
-        <Card className="mt-12 p-8">
+        <AppCard className="mt-12 p-8">
           <div className="grid gap-6 md:grid-cols-2">
-            <Input type="text" placeholder="Full Name" />
-            <Input type="email" placeholder="Email Address" />
-            <Input type="tel" placeholder="Phone Number" />
-            <Input type="date" />
+            <AppInput type="text" placeholder="Full Name" />
+            <AppInput type="email" placeholder="Email Address" />
+            <AppInput type="tel" placeholder="Phone Number" />
+            <AppInput type="date" />
           </div>
 
           <div className="mt-8">
@@ -38,25 +38,22 @@ const BookingForm = () => {
 
             <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
               {slots.map((slot) => (
-                <Button
+                <AppButton
                   key={slot}
                   type="button"
                   variant="outline"
                   className="w-full py-3"
                 >
                   {slot}
-                </Button>
+                </AppButton>
               ))}
             </div>
           </div>
 
-          <Button
-            type="submit"
-            className="mt-10 w-full py-4 text-lg"
-          >
+          <AppButton type="submit" className="mt-10 w-full py-4 text-lg">
             Confirm Booking
-          </Button>
-        </Card>
+          </AppButton>
+        </AppCard>
       </div>
     </section>
   );
