@@ -1,61 +1,51 @@
 import {
-  Banknote,
-  CreditCard,
-  Smartphone,
-  Landmark,
   ArrowRight,
+  CreditCard,
+  Landmark,
+  Smartphone,
+  type LucideIcon,
 } from "lucide-react";
 
+import { AppBadge } from "@/components/common/AppBadge";
 import { AppButton } from "@/components/common/AppButton";
 import { AppCard } from "@/components/common/AppCard";
-import { AppBadge } from "@/components/common/AppBadge";
-import {
-  usePaymentStore,
-  type PaymentMethod,
-} from "../store/usePaymentStore";
 
-type PaymentMethodOption = {
-  id: PaymentMethod;
-  title: string;
-  description: string;
-};
+import { usePaymentStore } from "../store/usePaymentStore";
+import type { PaymentMethod } from "../types/payment.types";
 
 type PaymentMethodStepProps = {
   compact?: boolean;
   showContinueButton?: boolean;
 };
 
-const paymentMethods: PaymentMethodOption[] = [
+type LocalPaymentMethod = {
+  id: PaymentMethod | "COD" | "ONLINE" | "UPI";
+  title: string;
+  description: string;
+};
+
+const paymentMethods: LocalPaymentMethod[] = [
+  {
+    id: "COD",
+    title: "Pay at Home",
+    description: "Pay during sample collection",
+  },
+  {
+    id: "ONLINE",
+    title: "Online Payment",
+    description: "Pay securely online",
+  },
   {
     id: "UPI",
     title: "UPI",
-    description: "Pay using PhonePe, Google Pay, Paytm or any UPI app.",
-  },
-  {
-    id: "CARD",
-    title: "Credit / Debit Card",
-    description: "Pay securely using Visa, Mastercard or RuPay.",
-  },
-  {
-    id: "NET_BANKING",
-    title: "Net Banking",
-    description: "Pay directly from your bank account.",
-  },
-  {
-    id: "CASH_ON_COLLECTION",
-    title: "Cash on Collection",
-    description: "Pay when our phlebotomist collects your sample.",
+    description: "Pay using any UPI app",
   },
 ];
 
-const methodIcons: Record<
-  PaymentMethodOption["id"],
-  typeof Smartphone
-> = {
+const methodIcons = {
+  COD: Landmark,
+  ONLINE: CreditCard,
   UPI: Smartphone,
-  CARD: CreditCard,
-  NET_BANKING: Landmark,
-  CASH_ON_COLLECTION: Banknote,
 };
 
 export const PaymentMethodStep = ({
@@ -74,10 +64,20 @@ export const PaymentMethodStep = ({
     (state) => state.setStep
   );
 
-  const handleContinue = () => {
-    if (!selectedMethod) return;
+  const selectedMethodId = selectedMethod as LocalPaymentMethod["id"] | null;
 
-    if (selectedMethod === "CASH_ON_COLLECTION") {
+  const handleSelectMethod = (
+    methodId: LocalPaymentMethod["id"]
+  ) => {
+    setSelectedMethod(methodId as PaymentMethod);
+  };
+
+  const handleContinue = () => {
+    if (!selectedMethodId) {
+      return;
+    }
+
+    if (selectedMethodId === "COD") {
       setStep("CASH_CONFIRM");
       return;
     }
@@ -86,7 +86,11 @@ export const PaymentMethodStep = ({
   };
 
   return (
-    <div className={compact ? "space-y-4" : "space-y-6"}>
+    <div
+      className={
+        compact ? "space-y-4" : "space-y-6"
+      }
+    >
       <div>
         <h2
           className={
@@ -107,45 +111,47 @@ export const PaymentMethodStep = ({
 
       <div className="grid gap-3">
         {paymentMethods.map((method) => {
-          const Icon = methodIcons[method.id];
+          const Icon = methodIcons[method.id as keyof typeof methodIcons] as unknown as LucideIcon;
           const isSelected =
-            selectedMethod === method.id;
+            selectedMethodId === method.id;
 
           return (
             <AppCard
-              key={method.id}
+              key={String(method.id)}
               onClick={() =>
-                setSelectedMethod(method.id)
+                handleSelectMethod(method.id)
               }
-              className={`cursor-pointer transition-all ${
-                compact ? "p-3" : ""
-              } ${
+              className={[
+                "cursor-pointer transition-all",
+                compact ? "p-3" : "",
                 isSelected
                   ? "border-primary ring-2 ring-primary-light"
-                  : "hover:border-primary/40"
-              }`}
+                  : "hover:border-primary/40",
+              ]
+                .filter(Boolean)
+                .join(" ")}
             >
               <div className="flex items-center gap-3">
                 <span
-                  className={`flex shrink-0 items-center justify-center rounded-xl bg-primary-light text-primary ${
+                  className={[
+                    "flex shrink-0 items-center justify-center rounded-xl bg-primary-light text-primary",
                     compact
                       ? "h-10 w-10"
-                      : "h-12 w-12"
-                  }`}
+                      : "h-12 w-12",
+                  ].join(" ")}
                 >
                   <Icon
                     size={compact ? 18 : 22}
                   />
                 </span>
 
-                <div className="flex-1">
-                  <div className="flex items-center gap-2">
+                <div className="min-w-0 flex-1">
+                  <div className="flex flex-wrap items-center gap-2">
                     <h3 className="font-bold text-foreground">
                       {method.title}
                     </h3>
 
-                    {method.id ===
-                      "CASH_ON_COLLECTION" && (
+                    {method.id === "COD" && (
                       <AppBadge variant="warning">
                         Pay Later
                       </AppBadge>
@@ -167,7 +173,8 @@ export const PaymentMethodStep = ({
       {showContinueButton && (
         <div className="flex justify-end">
           <AppButton
-            disabled={!selectedMethod}
+            type="button"
+            disabled={!selectedMethodId}
             onClick={handleContinue}
           >
             Continue

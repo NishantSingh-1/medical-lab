@@ -1,11 +1,8 @@
 import { create } from "zustand";
 
-import type {
-  PaymentMethod,
-  PaymentStatus,
-} from "../types/payment.types";
+import type { PaymentMethod, PaymentStep } from "../types/payment.types";
 
-type PaymentStep = string;
+type PaymentStatus = string;
 
 type BookingConfirmation = unknown;
 

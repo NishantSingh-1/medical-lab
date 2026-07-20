@@ -1,23 +1,16 @@
-export type PaymentStatus =
-  | "PAID"
-  | "PENDING"
-  | "FAILED"
-  | "REFUNDED";
+export type PaymentMethodId =
+  | "cod"
+  | "online"
+  | "upi";
 
-export type PaymentMethod =
-  | "UPI"
-  | "CARD"
-  | "CASH"
-  | "NET_BANKING";
-
-export type PaymentItem = {
-  id: string;
-  bookingId: string;
-  invoiceId: string;
-  testName: string;
-  patientName: string;
-  amount: number;
-  paymentDate: string;
-  paymentMethod: PaymentMethod;
-  status: PaymentStatus;
+export type PaymentMethod = {
+  id: PaymentMethodId;
+  title: string;
+  description: string;
 };
+
+export type PaymentStep =
+  | "METHOD"
+  | "CASH_CONFIRM"
+  | "PROCESSING"
+  | "SUCCESS";

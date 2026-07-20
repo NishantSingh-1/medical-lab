@@ -20,6 +20,7 @@ import {
   SlotModal,
   type SelectedSlot,
 } from "@/features/cart/components/SlotModal";
+
 import { usePaymentStore } from "@/features/payment/store/usePaymentStore";
 
 export type Address = {
@@ -38,16 +39,25 @@ const Cart = () => {
 
   const { cartItems, subtotal } = useCart();
 
-  const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
+  const selectedPaymentMethod = usePaymentStore(
+    (state) => state.selectedMethod
+  );
+
+  const [isAddressModalOpen, setIsAddressModalOpen] =
+    useState(false);
+
   const [selectedAddress, setSelectedAddress] =
     useState<Address | null>(null);
 
-  const [isSlotModalOpen, setIsSlotModalOpen] = useState(false);
+  const [isSlotModalOpen, setIsSlotModalOpen] =
+    useState(false);
+
   const [selectedSlot, setSelectedSlot] =
     useState<SelectedSlot | null>(null);
 
   const gst = Math.round(subtotal * 0.05);
-  const total = subtotal + gst;
+  const discount = 0;
+  const total = subtotal + gst - discount;
 
   const isCartEmpty = cartItems.length === 0;
 
@@ -55,18 +65,46 @@ const Cart = () => {
     setSelectedAddress(address);
     setIsAddressModalOpen(false);
   };
-  // simple checkout handler
-  const handleCheckout = () => {
-    if (isCartEmpty) return;
-    navigate('/checkout');
-  };
 
   const handleConfirmSlot = (slot: SelectedSlot) => {
     setSelectedSlot(slot);
     setIsSlotModalOpen(false);
   };
 
+  const handleCheckout = () => {
+    if (isCartEmpty) {
+      return;
+    }
 
+    if (!selectedAddress) {
+      setIsAddressModalOpen(true);
+      return;
+    }
+
+    if (!selectedSlot) {
+      setIsSlotModalOpen(true);
+      return;
+    }
+
+    if (!selectedPaymentMethod) {
+      return;
+    }
+
+    navigate("/booking-confirmation", {
+  state: {
+    cartItems,
+    address: selectedAddress,
+    slot: selectedSlot,
+    paymentMethod: selectedPaymentMethod,
+    pricing: {
+      subtotal,
+      discount,
+      gst,
+      total,
+    },
+  },
+});
+  };
 
   return (
     <>
@@ -115,14 +153,30 @@ const Cart = () => {
           <div className="grid gap-6 lg:grid-cols-12 lg:items-start">
             <section className="lg:col-span-8">
               {isCartEmpty ? (
-                <EmptyCartState onBrowseTests={() => navigate("/tests")} />
+                <EmptyCartState
+                  onBrowseTests={() => navigate("/tests")}
+                />
               ) : (
                 <CartItems />
               )}
             </section>
 
             <aside className="lg:col-span-4">
-              
+              <CheckoutSidebar
+                subtotal={subtotal}
+                gst={gst}
+                total={total}
+                isCartEmpty={isCartEmpty}
+                selectedAddress={selectedAddress}
+                selectedSlot={selectedSlot}
+                onAddAddress={() =>
+                  setIsAddressModalOpen(true)
+                }
+                onAddSlot={() =>
+                  setIsSlotModalOpen(true)
+                }
+                onCheckout={handleCheckout}
+              />
             </aside>
           </div>
         </div>
@@ -173,7 +227,11 @@ const EmptyCartState = ({
       </AppButton>
 
       <div className="mt-8 flex items-center gap-2 text-xs font-semibold text-muted-foreground">
-        <ShieldCheck size={15} className="text-primary" />
+        <ShieldCheck
+          size={15}
+          className="text-primary"
+        />
+
         Secure booking with NABL-accredited labs
       </div>
     </AppCard>

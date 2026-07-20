@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import {
   CalendarDays,
   Clock,
@@ -13,12 +14,12 @@ import { AppCard } from "@/components/common/AppCard";
 import type { SelectedSlot } from "@/features/cart/components/SlotModal";
 import { PaymentMethodStep } from "@/features/payment/components/PaymentMethodStep";
 import { usePaymentStore } from "@/features/payment/store/usePaymentStore";
-import { useState } from "react";
+
 type Address = {
   fullName: string;
   mobile: string;
   houseNumber: string;
-  street: string
+  street: string;
   landmark: string;
   city: string;
   state: string;
@@ -30,19 +31,12 @@ type CheckoutSidebarProps = {
   gst: number;
   total: number;
   isCartEmpty: boolean;
-
   selectedAddress: Address | null;
   selectedSlot: SelectedSlot | null;
-
   onAddAddress: () => void;
   onAddSlot: () => void;
   onCheckout: () => void;
 };
-const [couponCode, setCouponCode] = useState("");
-const [discount, setDiscount] = useState(0);
-const selectedMethod = usePaymentStore(
-  (state) => state.selectedMethod
-);
 
 export const CheckoutSidebar = ({
   subtotal,
@@ -55,19 +49,24 @@ export const CheckoutSidebar = ({
   onAddSlot,
   onCheckout,
 }: CheckoutSidebarProps) => {
- const isCheckoutDisabled =
-  isCartEmpty ||
-  !selectedAddress ||
-  !selectedSlot ||
-  !selectedMethod;
+  // Hook component ke andar hona chahiye.
+  const selectedMethod = usePaymentStore(
+    (state) => state.selectedMethod
+  );
+
+  const isCheckoutDisabled =
+    isCartEmpty ||
+    !selectedAddress ||
+    !selectedSlot ||
+    !selectedMethod;
 
   const checkoutButtonText = getCheckoutButtonText({
-  isCartEmpty,
-  hasAddress: Boolean(selectedAddress),
-  hasSlot: Boolean(selectedSlot),
-  hasPaymentMethod: Boolean(selectedMethod),
-  
-});
+    isCartEmpty,
+    hasAddress: Boolean(selectedAddress),
+    hasSlot: Boolean(selectedSlot),
+    hasPaymentMethod: Boolean(selectedMethod),
+  });
+
   return (
     <AppCard className="p-5 shadow-none sm:p-6 lg:sticky lg:top-8">
       {/* Address */}
@@ -101,61 +100,41 @@ export const CheckoutSidebar = ({
               Select a date and time for sample collection.
             </EmptySectionMessage>
           )}
-
-          <div className="mt-4 rounded-2xl border border-border bg-muted/30 p-4">
-  <PaymentMethodStep
-    compact
-    showContinueButton={false}
-  />
-</div>
         </CheckoutSection>
       </div>
-  {/* Coupon */}
-<div className="mt-4 rounded-2xl border border-border bg-muted/30 p-4">
-  <div>
-    <h3 className="font-bold text-foreground">
-      Apply Coupon
-    </h3>
 
-    <p className="text-xs text-muted-foreground">
-      Use MEDLAB10 to get 10% off
-    </p>
-  </div>
+      {/* Payment Method */}
+      <div className="mt-4 rounded-2xl border border-border bg-muted/30 p-4">
+        <PaymentMethodStep
+          compact
+          showContinueButton={false}
+        />
+      </div>
 
-  <div className="mt-3 flex gap-2">
-    <input
-      type="text"
-      value={couponCode}
-      onChange={(event) =>
-        setCouponCode(event.target.value.toUpperCase())
-      }
-      placeholder="Enter coupon code"
-      className="h-10 flex-1 rounded-xl border border-border bg-background px-3 text-sm outline-none focus:border-primary"
-    />
+      {/* Coupon */}
+      <div className="mt-4 rounded-2xl border border-border bg-muted/30 p-4">
+        <div className="flex items-center justify-between gap-4">
+          <div>
+            <h3 className="font-bold text-foreground">
+              Apply Coupon
+            </h3>
 
-    <AppButton
-      type="button"
-      variant="outline"
-      onClick={() => {
-        if (couponCode === "MEDLAB10") {
-          setDiscount(Math.round(subtotal * 0.1));
-        } else {
-          setDiscount(0);
-        }
-      }}
-    >
-      Apply
-    </AppButton>
-  </div>
+            <p className="mt-1 text-xs text-muted-foreground">
+              Save more on your booking
+            </p>
+          </div>
 
-  {discount > 0 && (
-    <p className="mt-2 text-xs font-bold text-primary">
-      Coupon applied. You saved ₹{discount}
-    </p>
-  )}
-</div>
+          <AppButton
+            type="button"
+            variant="outline"
+            size="sm"
+          >
+            Apply
+          </AppButton>
+        </div>
+      </div>
 
-      {/* Price Summary Header */}
+      {/* Order Summary Header */}
       <div className="mt-5 flex items-center gap-3 border-b border-border pb-5">
         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-light text-primary">
           <ReceiptText size={20} />
@@ -173,35 +152,35 @@ export const CheckoutSidebar = ({
       </div>
 
       {/* Price Details */}
-<div className="mt-5 space-y-4 text-sm">
-  <SummaryRow
-    label="Subtotal"
-    value={`₹${subtotal}`}
-  />
+      <div className="mt-5 space-y-4 text-sm">
+        <SummaryRow
+          label="Subtotal"
+          value={`₹${subtotal}`}
+        />
 
-  <SummaryRow
-  label="Discount"
-  value={`-₹${discount}`}
-/>
+        <SummaryRow
+          label="Discount"
+          value="-₹0"
+        />
 
-  <SummaryRow
-    label="GST (5%)"
-    value={`₹${gst}`}
-  />
+        <SummaryRow
+          label="GST (5%)"
+          value={`₹${gst}`}
+        />
 
-  <SummaryRow
-    label="Home Collection"
-    value="FREE"
-  />
+        <SummaryRow
+          label="Home Collection"
+          value="FREE"
+        />
 
-  <div className="border-t border-border pt-4">
-  <SummaryRow
-  label="Total Amount"
-  value={`₹${Math.max(total - discount, 0)}`}
-  emphasized
-/>
-  </div>
-</div>
+        <div className="border-t border-border pt-4">
+          <SummaryRow
+            label="Total Amount"
+            value={`₹${total}`}
+            emphasized
+          />
+        </div>
+      </div>
 
       {/* Checkout */}
       {isCartEmpty ? (
@@ -225,15 +204,17 @@ export const CheckoutSidebar = ({
             {checkoutButtonText}
           </AppButton>
 
-          {(!selectedAddress || !selectedSlot || !selectedMethod) && (
-  <p className="mt-3 text-center text-xs font-semibold text-muted-foreground">
-    {!selectedAddress
-      ? "Please add your home visit address first."
-      : !selectedSlot
-        ? "Please select your appointment slot."
-        : "Please select a payment method."}
-  </p>
-)}
+          {isCheckoutDisabled && (
+            <p className="mt-3 text-center text-xs font-semibold text-muted-foreground">
+              {!selectedAddress
+                ? "Please add your home visit address first."
+                : !selectedSlot
+                  ? "Please select your appointment slot."
+                  : !selectedMethod
+                    ? "Please select a payment method."
+                    : ""}
+            </p>
+          )}
         </>
       )}
 
@@ -251,11 +232,11 @@ export const CheckoutSidebar = ({
 };
 
 type CheckoutSectionProps = {
-  icon: React.ReactNode;
+  icon: ReactNode;
   title: string;
   actionLabel: string;
   onAction: () => void;
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 const CheckoutSection = ({
@@ -351,7 +332,7 @@ const SlotDetails = ({
 };
 
 type EmptySectionMessageProps = {
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 const EmptySectionMessage = ({
@@ -413,13 +394,21 @@ const getCheckoutButtonText = ({
   hasSlot,
   hasPaymentMethod,
 }: CheckoutButtonTextParams) => {
-  if (isCartEmpty) return "Add Tests to Continue";
+  if (isCartEmpty) {
+    return "Add Tests to Continue";
+  }
 
-  if (!hasAddress) return "Add Address to Continue";
+  if (!hasAddress) {
+    return "Add Address to Continue";
+  }
 
-  if (!hasSlot) return "Select Appointment Slot";
+  if (!hasSlot) {
+    return "Select Appointment Slot";
+  }
 
-  if (!hasPaymentMethod) return "Select Payment Method";
+  if (!hasPaymentMethod) {
+    return "Select Payment Method";
+  }
 
   return "Schedule Appointment";
 };

@@ -1,17 +1,17 @@
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import Navbar from "../../../components/Navbar";
+import Footer from "../../../components/Footer";
 import { Target, ShieldAlert, HeartHandshake } from "lucide-react";
 
 const AboutPage = () => {
   return (
     <div className="bg-[#f4faf7]/40 min-h-screen text-left font-sans select-none">
-      
+
       <Navbar />
 
       {/* Sleek Medical Title Banner Header */}
       <section className="pt-32 pb-12 bg-[#0f8a73] text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(20,184,166,0.15),transparent_40%)]" />
-        
+
         <div className="max-w-7xl mx-auto px-6 relative z-10 flex flex-col items-center justify-center text-center space-y-2">
           <span className="text-[10px] md:text-xs font-black bg-white/10 text-teal-100 border border-white/10 px-3 py-1 rounded-full inline-block uppercase tracking-widest">
             NABL & CAP Accredited Clinical Diagnostics
@@ -79,7 +79,7 @@ const AboutPage = () => {
       {/* Core Enterprise Value Pillars Section */}
       <section className="bg-white border-y border-gray-100 py-16">
         <div className="max-w-7xl mx-auto px-6">
-          
+
           <div className="text-center max-w-2xl mx-auto mb-12 space-y-1.5">
             <span className="text-[11px] font-black text-[#0f8a73] uppercase tracking-wider block">Bio-Analytical Compliance</span>
             <h2 className="text-xl md:text-3xl font-black text-gray-900 tracking-tight">Our Core Diagnostic Pillars</h2>

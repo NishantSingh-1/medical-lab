@@ -8,15 +8,15 @@ import {
 import Navbar from "./components/Navbar";
 
 /* Public pages */
-import HomePage from "./pages/HomePage";
-import AboutPage from "./pages/AboutPage";
-import ContactPage from "./pages/ContactPage";
-import TestsPage from "./pages/TestsPage";
-import Cart from "./pages/Cart";
-import BookingPage from "./pages/BookingPage";
-import ManageTests from "./pages/ManageTests";
-import BookingSuccessPage from "./pages/BookingSuccessPage";
-import SearchCategoriesPage from "./pages/SearchCategoriesPage";
+import HomePage from "./features/booking/pages/HomePage";
+import AboutPage from "./features/booking/pages/AboutPage";
+import ContactPage from "./features/booking/pages/ContactPage";
+import TestsPage from "./features/booking/pages/TestsPage";
+import Cart from "./features/booking/pages/Cart";
+import BookingPage from "./features/booking/pages/BookingPage";
+import ManageTests from "./features/booking/pages/ManageTests";
+import BookingSuccessPage from "./features/booking/pages/BookingSuccessPage";
+import SearchCategoriesPage from "./features/booking/pages/SearchCategoriesPage";
 
 /* Authentication */
 import { AuthFlow } from "./features/auth/AuthFlow";
@@ -96,6 +96,8 @@ import { PaymentFlow } from "./features/payment/PaymentFlow";
 import { PaymentHistoryPage } from "./features/payment/pages/PaymentHistoryPage";
 import { InvoicePage } from "./features/payment/pages/InvoicePage";
 import { RefundHistoryPage } from "./features/payment/pages/RefundHistoryPage";
+import BookingConfirmationPage from "@/features/booking/pages/BookingConfirmationPage";
+
 
 /* Website components/pages */
 import BlogDetails from "./components/blogs/BlogDetails";
@@ -119,6 +121,8 @@ import Notifications from "./components/admin/pages/Notifications";
 import Settings from "./components/admin/pages/Settings";
 import AdminLogin from "./components/admin/pages/AdminLogin";
 
+
+
 const ROUTES_WITHOUT_NAVBAR = [
   "/admin",
   "/dashboard",
@@ -132,7 +136,7 @@ const ROUTES_WITHOUT_NAVBAR = [
   "/verify-email",
   "/select-role",
   "/switch-account",
-   "/user/test-details",
+  "/user/test-details",
   "/setup-2fa",
   "/verify-2fa",
 
@@ -142,6 +146,7 @@ const ROUTES_WITHOUT_NAVBAR = [
   "/cart",
   "/search-categories",
   "/booking-success",
+  "/booking-confirmation",
   "/booking-flow",
   "/payment-flow",
 ];
@@ -204,15 +209,18 @@ function AppContent() {
           element={<MostBookedTestsPage />}
         />
         <Route
-  path="/booking-flow"
-  element={<BookingFlow />}
-/>
+          path="/booking-flow"
+          element={<BookingFlow />}
+        />
 
-<Route
-  path="/payment-flow"
-  element={<PaymentFlow />}
+        <Route
+          path="/payment-flow"
+          element={<PaymentFlow />}
+        />
+        <Route
+  path="/booking-confirmation"
+  element={<BookingConfirmationPage />}
 />
-
 
         <Route
           path="/booking-success"
@@ -460,8 +468,8 @@ function AppContent() {
             element={<SupportTicketDetailPage />}
           />
 
-          
-        
+
+
         </Route>
 
         {/* Public booking/payment flows */}

@@ -1,6 +1,6 @@
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-import TestCard from "../components/TestCard";
+import Navbar from "../../../components/Navbar";
+import Footer from "../../../components/Footer";
+import TestCard from "../../../components/TestCard";
 import { Search } from "lucide-react";
 
 const tests = [

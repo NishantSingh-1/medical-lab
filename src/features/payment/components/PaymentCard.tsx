@@ -79,7 +79,7 @@ export const PaymentCard = ({
             <InfoItem
               icon={<CreditCard size={16} />}
               label="Method"
-              value={paymentMethodLabel[payment.paymentMethod]}
+              value={paymentMethodLabel[payment.paymentMethod as keyof typeof paymentMethodLabel]}
             />
           </div>
         </div>
